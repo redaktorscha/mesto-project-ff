@@ -1,14 +1,14 @@
 {
   "name": "mesto-project-ff",
   "version": "1.0.0",
-  "description": "",
+  "description": "https://github.com/redaktorscha/mesto-project-ff",
   "main": "index.js",
   "scripts": {
     "build": "webpack --mode production",
     "dev": "webpack serve"
   },
   "keywords": [],
-  "author": "",
+  "author": "redaktorscha",
   "license": "ISC",
   "devDependencies": {
     "@babel/core": "^7.28.4",
