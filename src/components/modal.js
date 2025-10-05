@@ -1,19 +1,21 @@
 /**
  *
  * @param {HTMLElement} modalElem
+ * @param {Function} onOpen
  */
-function openModal(modalElem) {
+function openModal(modalElem, onOpen) {
   modalElem.classList.add('popup_is-opened');
-  // todo add listener close on esc
+  onOpen();
 }
 
 /**
  *
  * @param {HTMLElement} modalElem
+ * @param {Function} onClose
  */
-function closeModal(modalElem) {
+function closeModal(modalElem, onClose) {
   modalElem.classList.remove('popup_is-opened');
-  // todo remove listener close on esc
+  onClose();
 }
 
 export { openModal, closeModal };

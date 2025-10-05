@@ -21,6 +21,8 @@ const cardAddModal = document.querySelector('.popup_type_new-card');
 const openPictureModal = document.querySelector('.popup_type_image');
 const allModals = document.querySelectorAll('.popup');
 
+const getOpenedModal = () => document.querySelector('.popup_is-opened');
+
 // buttons for modals
 const profileEditBtn = document.querySelector('.profile__edit-button');
 const cardAddBtn = document.querySelector('.profile__add-button');
@@ -44,24 +46,39 @@ allModals.forEach((modal) => {
   modal.addEventListener('click', (e) => {
     const clickedElem = e.target;
     const currentTarget = e.currentTarget;
-    const openedModal = document.querySelector('.popup_is-opened');
+    const openedModal = getOpenedModal();
     console.log('modal clickedElem', clickedElem);
     console.log('modal currentTarget', currentTarget);
     const isCloseBtnClicked = [...closeModalBtns].includes(clickedElem);
     const isModalBackdropClicked = clickedElem === currentTarget;
     if (isCloseBtnClicked || isModalBackdropClicked) {
-      closeModal(openedModal);
+      closeModal(openedModal, onCloseModal);
     }
   });
 });
 
 profileEditBtn.addEventListener('click', () => {
-  openModal(profileEditModal);
+  openModal(profileEditModal, onOpenModal);
 });
 
 cardAddBtn.addEventListener('click', () => {
-  openModal(cardAddModal);
+  openModal(cardAddModal, onOpenModal);
 });
+
+function closeModalOnKeyDown(e) {
+  if (e.key === 'Escape') {
+    const openedModal = getOpenedModal();
+    closeModal(openedModal, onCloseModal);
+  }
+}
+
+function onOpenModal() {
+  document.addEventListener('keydown', closeModalOnKeyDown);
+}
+
+function onCloseModal() {
+  document.removeEventListener('keydown', closeModalOnKeyDown);
+}
 
 function createCardElement(data, onDelete) {
   const cardElement = cardTemplate.cloneNode(true);
@@ -86,7 +103,7 @@ function onShow(imageElem, imageData) {
   imageElem.src = imageData.link;
   imageElem.alt = imageData.name;
   // popupImageCaption.textContent = cardData.name;
-  openModal(openPictureModal);
+  openModal(openPictureModal, onOpenModal);
 }
 
 // должна быть отдельной функций, можно стрелочной
