@@ -19,6 +19,7 @@ const placesWrap = document.querySelector('.places__list');
 const profileEditModal = document.querySelector('.popup_type_edit');
 const cardAddModal = document.querySelector('.popup_type_new-card');
 const openPictureModal = document.querySelector('.popup_type_image');
+const allModals = document.querySelectorAll('.popup');
 
 // buttons for modals
 const profileEditBtn = document.querySelector('.profile__edit-button');
@@ -28,12 +29,29 @@ const closeModalBtns = document.querySelectorAll('.popup__close');
 // show picture modal selectors
 const modalImage = document.querySelector('.popup__image');
 
-closeModalBtns.forEach((btn) => {
-  btn.addEventListener('click', (e) => {
-    console.log('close btn', e.target);
-    const opened = document.querySelector('.popup_is-opened');
-    console.log(opened);
-    closeModal(opened);
+// handle close on cross icon
+// closeModalBtns.forEach((btn) => {
+//   btn.addEventListener('click', (e) => {
+//     console.log('close btn', e.target);
+//     const opened = document.querySelector('.popup_is-opened');
+//     console.log(opened);
+//     closeModal(opened);
+//   });
+// });
+
+// handle close modals
+allModals.forEach((modal) => {
+  modal.addEventListener('click', (e) => {
+    const clickedElem = e.target;
+    const currentTarget = e.currentTarget;
+    const openedModal = document.querySelector('.popup_is-opened');
+    console.log('modal clickedElem', clickedElem);
+    console.log('modal currentTarget', currentTarget);
+    const isCloseBtnClicked = [...closeModalBtns].includes(clickedElem);
+    const isModalBackdropClicked = clickedElem === currentTarget;
+    if (isCloseBtnClicked || isModalBackdropClicked) {
+      closeModal(openedModal);
+    }
   });
 });
 
