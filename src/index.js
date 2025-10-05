@@ -30,6 +30,7 @@ const closeModalBtns = document.querySelectorAll('.popup__close');
 
 // show picture modal selectors
 const modalImage = document.querySelector('.popup__image');
+const modalImageCaption = document.querySelector('.popup__caption');
 
 // handle close on cross icon
 // closeModalBtns.forEach((btn) => {
@@ -102,7 +103,7 @@ function onShow(imageElem, imageData) {
   console.log('image clicked', imageData.link, imageData.name);
   imageElem.src = imageData.link;
   imageElem.alt = imageData.name;
-  // popupImageCaption.textContent = cardData.name;
+  modalImageCaption.textContent = imageData.name;
   openModal(openPictureModal, onOpenModal);
 }
 
