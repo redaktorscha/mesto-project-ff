@@ -54,16 +54,6 @@ const addCardInputPlaceName = document.querySelector(
 );
 const addCardInputPlaceLink = document.querySelector('.popup__input_type_url');
 
-// handle close on cross icon
-// closeModalBtns.forEach((btn) => {
-//   btn.addEventListener('click', (e) => {
-//     console.log('close btn', e.target);
-//     const opened = document.querySelector('.popup_is-opened');
-//     console.log(opened);
-//     closeModal(opened);
-//   });
-// });
-
 // handle close modals
 allModals.forEach((modal) => {
   modal.addEventListener('click', (e) => {
@@ -99,6 +89,10 @@ function fillInUserInfoCard() {
   editProfileInputDescription.value = userProfileDescription.textContent;
 }
 
+/**
+ *
+ * @returns {{name: string, link: string}}
+ */
 function getNewCardData() {
   return {
     name: addCardInputPlaceName.value,
@@ -106,6 +100,10 @@ function getNewCardData() {
   };
 }
 
+/**
+ *
+ * @param {Event} e
+ */
 function closeModalOnKeyDown(e) {
   if (e.key === 'Escape') {
     const openedModal = getOpenedModal();
@@ -121,6 +119,12 @@ function onCloseModal() {
   document.removeEventListener('keydown', closeModalOnKeyDown);
 }
 
+/**
+ *
+ * @param {{name: string, link: string}} data
+ * @param {Function} onDelete
+ * @returns {HTMLElement}
+ */
 function createCardElement(data, onDelete) {
   const cardElement = cardTemplate.cloneNode(true);
   const deleteButton = cardElement.querySelector('.card__delete-button');
@@ -146,6 +150,11 @@ function createCardElement(data, onDelete) {
   return cardElement;
 }
 
+/**
+ *
+ * @param {HTMLImageElement} imageElem
+ * @param {{name: string, link: string}} imageData
+ */
 function onShow(imageElem, imageData) {
   console.log('image clicked', imageData.link, imageData.name);
   imageElem.src = imageData.link;
@@ -154,30 +163,41 @@ function onShow(imageElem, imageData) {
   openModal(openPictureModal, onOpenModal);
 }
 
-// должна быть отдельной функций, можно стрелочной
-function handleDeleteCard(evt) {
-  console.log('handleDeleteCard', evt.target.closest('.card'));
+/**
+ *
+ * @param {Event} e
+ */
+function handleDeleteCard(e) {
+  console.log('handleDeleteCard', e.target.closest('.card'));
   evt.target.closest('.card').remove();
 }
 
-formElementEditProfile.addEventListener('submit', (e) => {
-  e.preventDefault();
+function onEditProfileSubmit() {
   fillInUserInfoProfile();
   const openedModal = getOpenedModal();
   closeModal(openedModal, onCloseModal);
   formElementEditProfile.reset();
-});
+}
 
-formElementAddCard.addEventListener('submit', (e) => {
-  e.preventDefault();
+function onAddCardSubmit() {
   const newCardData = getNewCardData();
   placesWrap.prepend(createCardElement(newCardData, handleDeleteCard));
   const openedModal = getOpenedModal();
   closeModal(openedModal, onCloseModal);
   formElementAddCard.reset();
+}
+
+formElementEditProfile.addEventListener('submit', (e) => {
+  e.preventDefault();
+  onEditProfileSubmit();
 });
 
-// можно сделать и через простой цикл
+formElementAddCard.addEventListener('submit', (e) => {
+  e.preventDefault();
+  onAddCardSubmit();
+});
+
+// create initial cards
 initialCards.forEach((data) => {
   placesWrap.append(createCardElement(data, handleDeleteCard));
 });
