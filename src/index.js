@@ -123,9 +123,11 @@ function onCloseModal() {
  *
  * @param {{name: string, link: string}} data
  * @param {Function} onDelete
+ * @param {Function} onShow
+ * @param {Function} onLike
  * @returns {HTMLElement}
  */
-function createCardElement(data, onDelete) {
+function createCardElement(data, onDelete, onShow, onLike) {
   const cardElement = cardTemplate.cloneNode(true);
   const deleteButton = cardElement.querySelector('.card__delete-button');
   const cardLikeBtn = cardElement.querySelector('.card__like-button');
@@ -138,15 +140,11 @@ function createCardElement(data, onDelete) {
 
   deleteButton.addEventListener('click', onDelete);
 
-  //todo: Функцию, которая обрабатывает клик по изображению, нужно, как и лайк, передать аргументом в функцию создания карточки.
   cardImage.addEventListener('click', () => {
     onShow(modalImage, data);
   });
 
-  // todo: функцию обработчика лайка нужно передать в функцию создания карточки как аргумент
-  cardLikeBtn.addEventListener('click', () => {
-    cardLikeBtn.classList.toggle('card__like-button_is-active');
-  });
+  cardLikeBtn.addEventListener('click', onLike);
   return cardElement;
 }
 
@@ -155,12 +153,20 @@ function createCardElement(data, onDelete) {
  * @param {HTMLImageElement} imageElem
  * @param {{name: string, link: string}} imageData
  */
-function onShow(imageElem, imageData) {
+function handleShowCard(imageElem, imageData) {
   console.log('image clicked', imageData.link, imageData.name);
   imageElem.src = imageData.link;
   imageElem.alt = imageData.name;
   modalImageCaption.textContent = imageData.name;
   openModal(openPictureModal, onOpenModal);
+}
+
+/**
+ *
+ * @param {Event} e
+ */
+function handleLikeCard(e) {
+  e.target.classList.toggle('card__like-button_is-active');
 }
 
 /**
@@ -181,7 +187,14 @@ function onEditProfileSubmit() {
 
 function onAddCardSubmit() {
   const newCardData = getNewCardData();
-  placesWrap.prepend(createCardElement(newCardData, handleDeleteCard));
+  placesWrap.prepend(
+    createCardElement(
+      newCardData,
+      handleDeleteCard,
+      handleShowCard,
+      handleLikeCard,
+    ),
+  );
   const openedModal = getOpenedModal();
   closeModal(openedModal, onCloseModal);
   formElementAddCard.reset();
@@ -199,5 +212,7 @@ formElementAddCard.addEventListener('submit', (e) => {
 
 // create initial cards
 initialCards.forEach((data) => {
-  placesWrap.append(createCardElement(data, handleDeleteCard));
+  placesWrap.append(
+    createCardElement(data, handleDeleteCard, handleShowCard, handleLikeCard),
+  );
 });
