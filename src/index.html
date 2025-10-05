@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ru">
   <head>
     <meta charset="UTF-8" />
@@ -22,7 +22,9 @@
         <section class="profile page__section">
           <div
             class="profile__image"
-            style="background-image: url('<%= require(`./images/avatar.jpg`) %>');"
+            style="
+              background-image: url('<%= require(`./images/avatar.jpg`) %>');
+            "
           ></div>
           <div class="profile__info">
             <h1 class="profile__title">Жак-Ив Кусто</h1>
@@ -98,7 +100,7 @@
       </div>
     </div>
 
-<!--Относится к реализации 4-го спринта-->
+    <!--Относится к реализации 4-го спринта-->
     <template id="card-template">
       <!--Про тег темплейт студенты узнают из уроков 4-го спринта-->
       <li class="places__item card">

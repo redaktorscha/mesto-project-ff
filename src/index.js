@@ -1,5 +1,5 @@
-import "./pages/index.css";
-import { initialCards } from "./components/cards.js";
+import './pages/index.css';
+import { initialCards } from './components/cards.js';
 
 // В файле index.js должны остаться:
 // объявления и инициализация глобальных констант и переменных с DOM-элементами страницы;
@@ -8,29 +8,29 @@ import { initialCards } from "./components/cards.js";
 
 // Темплейт карточки
 const cardTemplate = document
-  .querySelector("#card-template")
-  .content.querySelector(".places__item");
+  .querySelector('#card-template')
+  .content.querySelector('.places__item');
 
 // DOM узлы
-const placesWrap = document.querySelector(".places__list");
+const placesWrap = document.querySelector('.places__list');
 
 function createCardElement(data, onDelete) {
   const cardElement = cardTemplate.cloneNode(true);
-  const deleteButton = cardElement.querySelector(".card__delete-button");
+  const deleteButton = cardElement.querySelector('.card__delete-button');
 
-  const cardImage = cardElement.querySelector(".card__image");
+  const cardImage = cardElement.querySelector('.card__image');
   cardImage.src = data.link;
   cardImage.alt = data.name;
 
-  cardElement.querySelector(".card__title").textContent = data.name;
+  cardElement.querySelector('.card__title').textContent = data.name;
 
-  deleteButton.addEventListener("click", onDelete);
+  deleteButton.addEventListener('click', onDelete);
   return cardElement;
 }
 
 // должна быть отдельной функций, можно стрелочной
 function handleDeleteCard(evt) {
-  evt.target.closest(".card").remove();
+  evt.target.closest('.card').remove();
 }
 
 // можно сделать и через простой цикл
