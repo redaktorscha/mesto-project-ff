@@ -23,6 +23,10 @@ const allModals = document.querySelectorAll('.popup');
 
 const getOpenedModal = () => document.querySelector('.popup_is-opened');
 
+// user info selectors
+const userProfileName = document.querySelector('.profile__title');
+const userProfileDescription = document.querySelector('.profile__description');
+
 // buttons for modals
 const profileEditBtn = document.querySelector('.profile__edit-button');
 const cardAddBtn = document.querySelector('.profile__add-button');
@@ -31,6 +35,15 @@ const closeModalBtns = document.querySelectorAll('.popup__close');
 // show picture modal selectors
 const modalImage = document.querySelector('.popup__image');
 const modalImageCaption = document.querySelector('.popup__caption');
+
+// edit profile popup selectors
+const formElementEditProfile = document.querySelector(
+  '.popup__form[name="edit-profile"]',
+);
+const editProfileInputName = document.querySelector('.popup__input_type_name');
+const editProfileInputDescription = document.querySelector(
+  '.popup__input_type_description',
+);
 
 // handle close on cross icon
 // closeModalBtns.forEach((btn) => {
@@ -59,12 +72,23 @@ allModals.forEach((modal) => {
 });
 
 profileEditBtn.addEventListener('click', () => {
+  fillInUserInfoCard();
   openModal(profileEditModal, onOpenModal);
 });
 
 cardAddBtn.addEventListener('click', () => {
   openModal(cardAddModal, onOpenModal);
 });
+
+function fillInUserInfoProfile() {
+  userProfileName.textContent = editProfileInputName.value;
+  userProfileDescription.textContent = editProfileInputDescription.value;
+}
+
+function fillInUserInfoCard() {
+  editProfileInputName.value = userProfileName.textContent;
+  editProfileInputDescription.value = userProfileDescription.textContent;
+}
 
 function closeModalOnKeyDown(e) {
   if (e.key === 'Escape') {
@@ -112,6 +136,14 @@ function handleDeleteCard(evt) {
   console.log('handleDeleteCard', evt.target.closest('.card'));
   evt.target.closest('.card').remove();
 }
+
+formElementEditProfile.addEventListener('submit', (e) => {
+  e.preventDefault();
+  fillInUserInfoProfile();
+  const openedModal = getOpenedModal();
+  closeModal(openedModal, onCloseModal);
+  formElementEditProfile.reset();
+});
 
 // можно сделать и через простой цикл
 initialCards.forEach((data) => {
