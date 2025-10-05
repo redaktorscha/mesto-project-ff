@@ -36,7 +36,7 @@ const closeModalBtns = document.querySelectorAll('.popup__close');
 const modalImage = document.querySelector('.popup__image');
 const modalImageCaption = document.querySelector('.popup__caption');
 
-// edit profile popup selectors
+// edit profile form selectors
 const formElementEditProfile = document.querySelector(
   '.popup__form[name="edit-profile"]',
 );
@@ -44,6 +44,15 @@ const editProfileInputName = document.querySelector('.popup__input_type_name');
 const editProfileInputDescription = document.querySelector(
   '.popup__input_type_description',
 );
+
+// add card form selectors
+const formElementAddCard = document.querySelector(
+  '.popup__form[name="new-place"]',
+);
+const addCardInputPlaceName = document.querySelector(
+  '.popup__input_type_card-name',
+);
+const addCardInputPlaceLink = document.querySelector('.popup__input_type_url');
 
 // handle close on cross icon
 // closeModalBtns.forEach((btn) => {
@@ -88,6 +97,13 @@ function fillInUserInfoProfile() {
 function fillInUserInfoCard() {
   editProfileInputName.value = userProfileName.textContent;
   editProfileInputDescription.value = userProfileDescription.textContent;
+}
+
+function getNewCardData() {
+  return {
+    name: addCardInputPlaceName.value,
+    link: addCardInputPlaceLink.value,
+  };
 }
 
 function closeModalOnKeyDown(e) {
@@ -143,6 +159,15 @@ formElementEditProfile.addEventListener('submit', (e) => {
   const openedModal = getOpenedModal();
   closeModal(openedModal, onCloseModal);
   formElementEditProfile.reset();
+});
+
+formElementAddCard.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const newCardData = getNewCardData();
+  placesWrap.prepend(createCardElement(newCardData, handleDeleteCard));
+  const openedModal = getOpenedModal();
+  closeModal(openedModal, onCloseModal);
+  formElementAddCard.reset();
 });
 
 // можно сделать и через простой цикл
