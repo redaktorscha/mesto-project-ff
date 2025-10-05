@@ -124,6 +124,7 @@ function onCloseModal() {
 function createCardElement(data, onDelete) {
   const cardElement = cardTemplate.cloneNode(true);
   const deleteButton = cardElement.querySelector('.card__delete-button');
+  const cardLikeBtn = cardElement.querySelector('.card__like-button');
 
   const cardImage = cardElement.querySelector('.card__image');
   cardImage.src = data.link;
@@ -133,8 +134,14 @@ function createCardElement(data, onDelete) {
 
   deleteButton.addEventListener('click', onDelete);
 
+  //todo: Функцию, которая обрабатывает клик по изображению, нужно, как и лайк, передать аргументом в функцию создания карточки.
   cardImage.addEventListener('click', () => {
     onShow(modalImage, data);
+  });
+
+  // todo: функцию обработчика лайка нужно передать в функцию создания карточки как аргумент
+  cardLikeBtn.addEventListener('click', () => {
+    cardLikeBtn.classList.toggle('card__like-button_is-active');
   });
   return cardElement;
 }
