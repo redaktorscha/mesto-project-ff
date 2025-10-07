@@ -1,21 +1,56 @@
+import { getOpenedModal } from './utils';
+
 /**
  *
  * @param {HTMLElement} modalElem
- * @param {Function} onOpen
  */
-function openModal(modalElem, onOpen) {
+function openModal(modalElem) {
   modalElem.classList.add('popup_is-opened');
-  onOpen();
+  onOpenModal();
 }
 
 /**
  *
  * @param {HTMLElement} modalElem
- * @param {Function} onClose
  */
-function closeModal(modalElem, onClose) {
+function closeModal(modalElem) {
   modalElem.classList.remove('popup_is-opened');
-  onClose();
+  onCloseModal();
 }
 
-export { openModal, closeModal };
+function onOpenModal() {
+  document.addEventListener('keydown', closeModalOnKeyDown);
+}
+
+function onCloseModal() {
+  document.removeEventListener('keydown', closeModalOnKeyDown);
+}
+
+/**
+ *
+ * @param {Event} e
+ */
+function closeModalOnKeyDown(e) {
+  if (e.key === 'Escape') {
+    const openedModal = getOpenedModal();
+    closeModal(openedModal, onCloseModal);
+  }
+}
+
+/**
+ *
+ * @param {Event} e
+ * @param {NodeList} closeModalBtns
+ */
+function handleCloseModalOnBtnClick(e, closeModalBtns) {
+  const clickedElem = e.target;
+  const currentTarget = e.currentTarget;
+  const openedModal = getOpenedModal();
+  const isCloseBtnClicked = [...closeModalBtns].includes(clickedElem);
+  const isModalBackdropClicked = clickedElem === currentTarget;
+  if (isCloseBtnClicked || isModalBackdropClicked) {
+    closeModal(openedModal);
+  }
+}
+
+export { openModal, closeModal, handleCloseModalOnBtnClick };
