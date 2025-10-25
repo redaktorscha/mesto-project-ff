@@ -2,12 +2,14 @@
  *
  * @param {{name: string, link: string}} data
  * @param {HTMLElement} template
- * @param {Function} onDelete
- * @param {Function} onShow
- * @param {Function} onLike
+ * @param {{onDelete: Function, onShow: Function, onLike: Function}} config
  * @returns {HTMLElement}
  */
-const createCardElement = (data, template, onDelete, onShow, onLike) => {
+const createCardElement = (
+  data,
+  template,
+  { onDelete, onShow, onLike } = {},
+) => {
   const cardElement = template.cloneNode(true);
   const deleteButton = cardElement.querySelector('.card__delete-button');
   const cardLikeBtn = cardElement.querySelector('.card__like-button');
@@ -18,11 +20,18 @@ const createCardElement = (data, template, onDelete, onShow, onLike) => {
 
   cardElement.querySelector('.card__title').textContent = data.name;
 
-  deleteButton.addEventListener('click', onDelete);
+  if (onDelete) {
+    deleteButton.addEventListener('click', onDelete);
+  }
 
-  cardImage.addEventListener('click', onShow);
+  if (onShow) {
+    cardImage.addEventListener('click', onShow);
+  }
 
-  cardLikeBtn.addEventListener('click', onLike);
+  if (onLike) {
+    cardLikeBtn.addEventListener('click', onLike);
+  }
+
   return cardElement;
 };
 

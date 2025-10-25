@@ -131,18 +131,16 @@ formElementAddCard.addEventListener('submit', (e) => {
   );
 
   placesWrap.prepend(
-    createCardElement(
-      newCardData,
-      cardTemplate,
-      handleDeleteCard,
-      handleShowCard(
+    createCardElement(newCardData, cardTemplate, {
+      onDelete: handleDeleteCard,
+      onShow: handleShowCard(
         modalImage,
         modalImageCaption,
         newCardData,
         openPictureModal,
       ),
-      handleLikeCard,
-    ),
+      onLike: handleLikeCard,
+    }),
   );
   const openedModal = getOpenedModal();
   closeModal(openedModal);
@@ -152,12 +150,15 @@ formElementAddCard.addEventListener('submit', (e) => {
 // create initial cards
 initialCards.forEach((data) => {
   placesWrap.append(
-    createCardElement(
-      data,
-      cardTemplate,
-      handleDeleteCard,
-      handleShowCard(modalImage, modalImageCaption, data, openPictureModal),
-      handleLikeCard,
-    ),
+    createCardElement(data, cardTemplate, {
+      onDelete: handleDeleteCard,
+      onShow: handleShowCard(
+        modalImage,
+        modalImageCaption,
+        data,
+        openPictureModal,
+      ),
+      onLike: handleLikeCard,
+    }),
   );
 });
