@@ -5,12 +5,12 @@ const getOpenedModal = () => document.querySelector('.popup_is-opened');
  * @param {HTMLInputElement} addCardInputPlaceLink
  * @returns {{name: string, link: string}}
  */
-function getNewCardData(addCardInputPlaceName, addCardInputPlaceLink) {
+const getNewCardData = (addCardInputPlaceName, addCardInputPlaceLink) => {
   return {
     name: addCardInputPlaceName.value,
     link: addCardInputPlaceLink.value,
   };
-}
+};
 
 /**
  *
@@ -19,15 +19,15 @@ function getNewCardData(addCardInputPlaceName, addCardInputPlaceLink) {
  * @param {HTMLElement} profileDescription
  * @param {HTMLElement} profileName
  */
-function fillInUserInfoProfile(
+const fillInUserInfoProfile = (
   inputName,
   inputDescription,
   profileName,
   profileDescription,
-) {
+) => {
   profileName.textContent = inputName.value;
   profileDescription.textContent = inputDescription.value;
-}
+};
 
 /**
  *
@@ -36,15 +36,15 @@ function fillInUserInfoProfile(
  * @param {HTMLElement} profileName
  * @param {HTMLElement} profileDescription
  */
-function fillInUserInfoCard(
+const fillInUserInfoCard = (
   inputName,
   inputDescription,
   profileName,
   profileDescription,
-) {
+) => {
   inputName.value = profileName.textContent;
   inputDescription.value = profileDescription.textContent;
-}
+};
 
 export {
   getOpenedModal,

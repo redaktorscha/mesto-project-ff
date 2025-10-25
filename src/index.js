@@ -139,3 +139,25 @@ initialCards.forEach((data) => {
     ),
   );
 });
+
+/**
+ *
+ * @param {HTMLImageElement} imageElem
+ * @param {HTMLImageElement} imageCaption
+ * @param {{name: string, link: string}} imageData
+ * @param {HTMLElement} openPictureModal
+ * @returns {Function}
+ */
+const handleShowCard = (
+  imageElem,
+  imageCaption,
+  imageData,
+  openPictureModal,
+) => {
+  return () => {
+    imageElem.src = imageData.link;
+    imageElem.alt = imageData.name;
+    imageCaption.textContent = imageData.name;
+    openModal(openPictureModal);
+  };
+};
