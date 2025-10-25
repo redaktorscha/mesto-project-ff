@@ -66,7 +66,7 @@ const addCardInputPlaceLink = document.querySelector('.popup__input_type_url');
 
 // handle close modals
 allModals.forEach((modal) => {
-  modal.addEventListener('click', (e) => {
+  modal.addEventListener('mousedown', (e) => {
     handleCloseModalOnBtnClick(e, closeModalBtns);
   });
 });
