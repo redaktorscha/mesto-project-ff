@@ -108,19 +108,20 @@ formElementAddCard.addEventListener('submit', (e) => {
     addCardInputPlaceName,
     addCardInputPlaceLink,
   );
-  placesWrap.prepend(
-    createCardElement(
+
+  const createConfig = {
+    handleDeleteCard,
+    handleShowCard: handleShowCard(
+      modalImage,
+      modalImageCaption,
       newCardData,
-      cardTemplate,
-      handleDeleteCard,
-      handleShowCard(
-        modalImage,
-        modalImageCaption,
-        newCardData,
-        openPictureModal,
-      ),
-      handleLikeCard,
+      openPictureModal,
     ),
+    handleLikeCard,
+  };
+
+  placesWrap.prepend(
+    createCardElement(newCardData, cardTemplate, createConfig),
   );
   const openedModal = getOpenedModal();
   closeModal(openedModal);
