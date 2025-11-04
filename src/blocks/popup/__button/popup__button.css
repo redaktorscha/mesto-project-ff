@@ -10,8 +10,19 @@
   background: #000;
   border-radius: 2px;
   border: none;
-  transition: visibility 0s, background 0.3s;
+  transition:
+    visibility 0s,
+    background 0.3s;
   margin-top: 48px;
+}
+
+.popup__button_disabled {
+  pointer-events: none;
+  user-select: none;
+  background-color: #fff;
+  color: #c4c4c4;
+  border-radius: 2px;
+  border: 1px solid #c4c4c4;
 }
 
 .popup__button:hover {
