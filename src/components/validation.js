@@ -29,26 +29,22 @@ const hideInputError = (formElement, inputElement) => {
   errorElement.textContent = '';
 };
 
+/**
+ *
+ * @param {*HTMLFormElement} formElement
+ * @param {HTMLInputElement} inputElement
+ */
 const checkInputValidity = (formElement, inputElement) => {
+  // check regex pattern
   if (inputElement.validity.patternMismatch) {
-    // встроенный метод setCustomValidity принимает на вход строку
-    // и заменяет ею стандартное сообщение об ошибке
-    inputElement.setCustomValidity(inputElement.dataset.errorMessage);
-    // showInputError теперь получает параметром форму, в которой
-    // находится проверяемое поле, и само это поле
-    showInputError(formElement, inputElement, inputElement.validationMessage);
+    inputElement.setCustomValidity(
+      inputElement.dataset.errorPatternMismatchMessage,
+    );
   } else {
-    // если передать пустую строку, то будут доступны
-    // стандартные браузерные сообщения
     inputElement.setCustomValidity('');
-    // hideInputError теперь получает параметром форму, в которой
-    // находится проверяемое поле, и само это поле
-    hideInputError(formElement, inputElement);
   }
 
   if (!inputElement.validity.valid) {
-    // теперь, если ошибка вызвана регулярным выражением,
-    // переменная validationMessage хранит наше кастомное сообщение
     showInputError(formElement, inputElement, inputElement.validationMessage);
   } else {
     hideInputError(formElement, inputElement);
