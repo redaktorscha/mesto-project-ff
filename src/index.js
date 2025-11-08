@@ -33,6 +33,9 @@ const cardAddModal = document.querySelector('.popup_type_new-card');
 const openPictureModal = document.querySelector('.popup_type_image');
 const allModals = document.querySelectorAll('.popup');
 
+//all forms
+const allFormsList = [...document.querySelectorAll('.form')];
+
 // user info selectors
 const userProfileName = document.querySelector('.profile__title');
 const userProfileDescription = document.querySelector('.profile__description');
@@ -165,5 +168,4 @@ initialCards.forEach((data) => {
   );
 });
 
-enableValidation(formElementEditProfile);
-enableValidation(formElementAddCard);
+enableValidation(allFormsList);

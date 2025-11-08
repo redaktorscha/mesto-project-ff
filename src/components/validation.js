@@ -31,7 +31,7 @@ const hideInputError = (formElement, inputElement) => {
 
 /**
  *
- * @param {*HTMLFormElement} formElement
+ * @param {HTMLFormElement} formElement
  * @param {HTMLInputElement} inputElement
  */
 const checkInputValidity = (formElement, inputElement) => {
@@ -88,6 +88,7 @@ const setEventListeners = (formElement) => {
   toggleButtonState(inputList, buttonElement);
 
   // todo add event listener for reset event
+  //Если открыть модальное окно редактирования профиля, ввести невалидные данные в поля ввода и закрыть окно, то при повторном открытии и заполнении данных формы профиля необходимо вызвать очистку ошибок валидации, которые могли остаться с прошлого открытия.
 
   inputList.forEach((inputElement) => {
     inputElement.addEventListener('input', () => {
@@ -99,9 +100,10 @@ const setEventListeners = (formElement) => {
 
 /**
  *
- * @param {HTMLFormElement} formElement
+ * @param {Array<HTMLFormElement>} formElements
  */
-const enableValidation = (formElement) => {
-  // todo find all forms here
-  setEventListeners(formElement);
+const enableValidation = (formElements) => {
+  formElements.forEach((elem) => setEventListeners(elem));
 };
+
+export { enableValidation };
