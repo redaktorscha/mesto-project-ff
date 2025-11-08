@@ -17,6 +17,7 @@ import {
   getNewCardData,
   getOpenedModal,
 } from './components/utils.js';
+import { enableValidation } from './components/validation.js';
 
 // places card template
 const cardTemplate = document
@@ -93,6 +94,7 @@ allModals.forEach((modal) => {
 });
 
 // open profile edit modal & prefill info
+// todo: clear all validation before modal open
 profileEditBtn.addEventListener('click', (_) => {
   fillInUserInfoCard(
     editProfileInputName,
@@ -162,3 +164,6 @@ initialCards.forEach((data) => {
     }),
   );
 });
+
+enableValidation(formElementEditProfile);
+enableValidation(formElementAddCard);
