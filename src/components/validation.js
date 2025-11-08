@@ -106,4 +106,22 @@ const enableValidation = (formElements) => {
   formElements.forEach((elem) => setEventListeners(elem));
 };
 
-export { enableValidation };
+/**
+ *
+ * @param {HTMLFormElement} formElement
+ */
+const clearValidation = (formElement) => {
+  const inputList = [...formElement.querySelectorAll('.popup__input')];
+  inputList.forEach((inputElement) =>
+    checkInputValidity(formElement, inputElement),
+  );
+  const buttonElement = formElement.querySelector('.popup__button');
+  // disables if not valid
+  toggleButtonState(inputList, buttonElement);
+
+  inputList.forEach((inputElement) => {
+    hideInputError(formElement, inputElement);
+  });
+};
+
+export { enableValidation, clearValidation };

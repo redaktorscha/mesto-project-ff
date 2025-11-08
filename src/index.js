@@ -17,7 +17,7 @@ import {
   getNewCardData,
   getOpenedModal,
 } from './components/utils.js';
-import { enableValidation } from './components/validation.js';
+import { enableValidation, clearValidation } from './components/validation.js';
 
 // places card template
 const cardTemplate = document
@@ -34,7 +34,7 @@ const openPictureModal = document.querySelector('.popup_type_image');
 const allModals = document.querySelectorAll('.popup');
 
 //all forms
-const allFormsList = [...document.querySelectorAll('.form')];
+const allFormsList = [...document.querySelectorAll('.popup__form')];
 
 // user info selectors
 const userProfileName = document.querySelector('.profile__title');
@@ -97,7 +97,6 @@ allModals.forEach((modal) => {
 });
 
 // open profile edit modal & prefill info
-// todo: clear all validation before modal open
 profileEditBtn.addEventListener('click', (_) => {
   fillInUserInfoCard(
     editProfileInputName,
@@ -105,6 +104,7 @@ profileEditBtn.addEventListener('click', (_) => {
     userProfileName,
     userProfileDescription,
   );
+  clearValidation(formElementEditProfile);
   openModal(profileEditModal);
 });
 
@@ -150,6 +150,7 @@ formElementAddCard.addEventListener('submit', (e) => {
   const openedModal = getOpenedModal();
   closeModal(openedModal);
   formElementAddCard.reset();
+  clearValidation(formElementAddCard);
 });
 
 // create initial cards
