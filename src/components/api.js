@@ -233,4 +233,12 @@ const checkIsPicture = (link) => {
   });
 };
 
-export { getUserInfo, getCardsList, editUserProfile, addNewCard, deleteCard };
+export {
+  getUserInfo,
+  getCardsList,
+  editUserProfile,
+  addNewCard,
+  deleteCard,
+  incrementLikes,
+  decrementLikes,
+};
