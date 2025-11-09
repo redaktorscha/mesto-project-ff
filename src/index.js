@@ -1,5 +1,5 @@
 import './pages/index.css';
-import { initialCards } from './components/cards.js';
+// import { initialCards } from './components/cards.js';
 import {
   openModal,
   closeModal,
@@ -13,7 +13,7 @@ import {
 
 import {
   fillInUserInfoCard,
-  fillInUserInfoProfile,
+  //fillInUserInfoProfile,
   getNewCardData,
   getOpenedModal,
 } from './components/utils.js';
@@ -23,6 +23,7 @@ import {
   getUserInfo,
   getCardsList,
   editUserProfile,
+  addNewCard,
 } from './components/api.js';
 
 // places card template
@@ -128,6 +129,9 @@ formElementEditProfile.addEventListener('submit', (e) => {
     .then((result) => {
       userProfileName.textContent = result.name;
       userProfileDescription.textContent = result.about;
+      const openedModal = getOpenedModal();
+      closeModal(openedModal);
+      formElementEditProfile.reset();
     })
     .catch(console.log);
   // fillInUserInfoProfile(
@@ -136,57 +140,43 @@ formElementEditProfile.addEventListener('submit', (e) => {
   //   userProfileName,
   //   userProfileDescription,
   // );
-  const openedModal = getOpenedModal();
-  closeModal(openedModal);
-  formElementEditProfile.reset();
 });
 
 // submit add card form
 formElementAddCard.addEventListener('submit', (e) => {
   e.preventDefault();
-  const newCardData = getNewCardData(
-    addCardInputPlaceName,
-    addCardInputPlaceLink,
-  );
+  // const newCardData = getNewCardData(
+  //   addCardInputPlaceName,
+  //   addCardInputPlaceLink,
+  // );
 
-  placesWrap.prepend(
-    createCardElement(newCardData, cardTemplate, {
-      onDelete: handleDeleteCard,
-      onShow: handleShowCard(
-        modalImage,
-        modalImageCaption,
-        newCardData,
-        openPictureModal,
-      ),
-      onLike: handleLikeCard,
-    }),
+  addNewCard(addCardInputPlaceName.value, addCardInputPlaceLink.value).then(
+    (card) => {
+      const { name, link } = card;
+      placesWrap.prepend(
+        createCardElement({ name, link }, cardTemplate, {
+          onDelete: handleDeleteCard,
+          onShow: handleShowCard(
+            modalImage,
+            modalImageCaption,
+            { name, link },
+            openPictureModal,
+          ),
+          onLike: handleLikeCard,
+        }),
+      );
+      const openedModal = getOpenedModal();
+      closeModal(openedModal);
+      formElementAddCard.reset();
+      clearValidation(formElementAddCard);
+    },
   );
-  const openedModal = getOpenedModal();
-  closeModal(openedModal);
-  formElementAddCard.reset();
-  clearValidation(formElementAddCard);
 });
-
-// create initial cards
-// initialCards.forEach((data) => {
-//   placesWrap.append(
-//     createCardElement(data, cardTemplate, {
-//       onDelete: handleDeleteCard,
-//       onShow: handleShowCard(
-//         modalImage,
-//         modalImageCaption,
-//         data,
-//         openPictureModal,
-//       ),
-//       onLike: handleLikeCard,
-//     }),
-//   );
-// });
-
-enableValidation(allFormsList);
 
 // todo add _id
 document.addEventListener('DOMContentLoaded', () => {
+  enableValidation(allFormsList);
+
   Promise.all([
     getUserInfo()
       .then((result) => {

@@ -116,7 +116,7 @@ const editUserProfile = (newUserName, newUserDescription) => {
  *
  * @param {string} cardName
  * @param {string} pictureLink
- * @returns {Promise}
+ * @returns {Promise<Card>}
  */
 const addNewCard = (cardName, pictureLink) => {
   return fetch(endPoints.cardPost(), {
@@ -233,4 +233,4 @@ const checkIsPicture = (link) => {
   });
 };
 
-export { getUserInfo, getCardsList, editUserProfile };
+export { getUserInfo, getCardsList, editUserProfile, addNewCard };
