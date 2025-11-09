@@ -158,14 +158,14 @@ formElementAddCard.addEventListener('submit', (e) => {
         createCardElement(cardTemplate, {
           cardData: card,
           userId: owner._id,
-          onDelete: (e) => handleDeleteCard(e, cardId),
+          onDelete: handleDeleteCard,
           onShow: handleShowCard(
             modalImage,
             modalImageCaption,
             { name, link },
             openPictureModal,
           ),
-          onLike: (e) => handleLikeCard(e, cardId),
+          onLike: handleLikeCard,
         }),
       );
       const openedModal = getOpenedModal();
@@ -194,14 +194,14 @@ document.addEventListener('DOMContentLoaded', () => {
           createCardElement(cardTemplate, {
             cardData: card,
             userId: userId,
-            onDelete: (e) => handleDeleteCard(e, cardId),
+            onDelete: handleDeleteCard,
             onShow: handleShowCard(
               modalImage,
               modalImageCaption,
               { name, link },
               openPictureModal,
             ),
-            onLike: (e) => handleLikeCard(e, cardId),
+            onLike: handleLikeCard,
           }),
         );
       });

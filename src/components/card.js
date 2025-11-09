@@ -25,7 +25,7 @@ const createCardElement = (
   cardElement.querySelector('.card__title').textContent = data.name;
 
   if (onDelete && isOwnCard) {
-    deleteButton.addEventListener('click', onDelete);
+    deleteButton.addEventListener('click', (e) => onDelete(e, cardData._id));
   }
 
   if (onShow) {
@@ -33,7 +33,7 @@ const createCardElement = (
   }
 
   if (onLike) {
-    cardLikeBtn.addEventListener('click', onLike);
+    cardLikeBtn.addEventListener('click', (e) => onLike(e, cardData._id));
   }
 
   return cardElement;
@@ -42,8 +42,25 @@ const createCardElement = (
 /**
  *
  * @param {Event} e
+ * @param {string} cardId
  */
-const handleLikeCard = (e) => {
+const handleLikeCard = (e, cardId) => {
+  // delete like
+  if (e.target.classList.contains('card__like-button_is-active')) {
+    decrementLikes(cardId)
+      .then((card) => {
+        // todo update card likes & remove card__like-button_is-active class
+      })
+      .catch(console.log);
+  } else {
+    // put like
+    incrementLikes(cardId)
+      .then((card) => {
+        // todo update card & add card__like-button_is-active class
+      })
+      .catch(console.log);
+  }
+
   e.target.classList.toggle('card__like-button_is-active');
 };
 
