@@ -140,7 +140,7 @@ const addNewCard = (cardName, pictureLink) => {
 /**
  *
  * @param {string} cardId
- * @returns {Promise}
+ * @returns {Promise<void>}
  */
 const deleteCard = (cardId) => {
   return fetch(endPoints.cardDelete(cardId), {
@@ -233,4 +233,4 @@ const checkIsPicture = (link) => {
   });
 };
 
-export { getUserInfo, getCardsList, editUserProfile, addNewCard };
+export { getUserInfo, getCardsList, editUserProfile, addNewCard, deleteCard };

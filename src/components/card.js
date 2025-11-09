@@ -1,17 +1,21 @@
+import { deleteCard, Card } from './api.js';
+
 /**
  *
- * @param {{name: string, link: string}} data
  * @param {HTMLElement} template
- * @param {{onDelete: Function, onShow: Function, onLike: Function}} config
+ * @param {{cardData: Card, userId: string, onDelete: Function, onShow: Function, onLike: Function}} config
  * @returns {HTMLElement}
  */
 const createCardElement = (
-  data,
   template,
-  { onDelete, onShow, onLike } = {},
+  { cardData, userId, onDelete, onShow, onLike } = {},
 ) => {
   const cardElement = template.cloneNode(true);
   const deleteButton = cardElement.querySelector('.card__delete-button');
+  const isOwnCard = cardData.owner._id === userId;
+  if (!isOwnCard) {
+    deleteButton.classList.add('card__delete-button_is-hidden');
+  }
   const cardLikeBtn = cardElement.querySelector('.card__like-button');
 
   const cardImage = cardElement.querySelector('.card__image');
@@ -20,7 +24,7 @@ const createCardElement = (
 
   cardElement.querySelector('.card__title').textContent = data.name;
 
-  if (onDelete) {
+  if (onDelete && isOwnCard) {
     deleteButton.addEventListener('click', onDelete);
   }
 
@@ -46,9 +50,14 @@ const handleLikeCard = (e) => {
 /**
  *
  * @param {Event} e
+ * @param {string} cardId
  */
-const handleDeleteCard = (e) => {
-  e.target.closest('.card').remove();
+const handleDeleteCard = (e, cardId) => {
+  deleteCard(cardId)
+    .then((_) => {
+      e.target.closest('.card').remove();
+    })
+    .catch(console.log);
 };
 
 export { createCardElement, handleLikeCard, handleDeleteCard };

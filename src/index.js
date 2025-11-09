@@ -126,9 +126,10 @@ formElementEditProfile.addEventListener('submit', (e) => {
   e.preventDefault();
 
   editUserProfile(editProfileInputName.value, editProfileInputDescription.value)
-    .then((result) => {
-      userProfileName.textContent = result.name;
-      userProfileDescription.textContent = result.about;
+    .then((user) => {
+      userProfileName.textContent = user.name;
+      userProfileDescription.textContent = user.about;
+      console.log(`editUserProfile: ${user._id}`);
       const openedModal = getOpenedModal();
       closeModal(openedModal);
       formElementEditProfile.reset();
@@ -152,10 +153,12 @@ formElementAddCard.addEventListener('submit', (e) => {
 
   addNewCard(addCardInputPlaceName.value, addCardInputPlaceLink.value).then(
     (card) => {
-      const { name, link } = card;
+      const { name, link, owner, _id: cardId } = card;
       placesWrap.prepend(
-        createCardElement({ name, link }, cardTemplate, {
-          onDelete: handleDeleteCard,
+        createCardElement(cardTemplate, {
+          cardData: card,
+          userId: owner._id,
+          onDelete: () => handleDeleteCard(cardId),
           onShow: handleShowCard(
             modalImage,
             modalImageCaption,
@@ -177,44 +180,31 @@ formElementAddCard.addEventListener('submit', (e) => {
 document.addEventListener('DOMContentLoaded', () => {
   enableValidation(allFormsList);
 
-  Promise.all([
-    getUserInfo()
-      .then((result) => {
-        console.log(result);
-        // todo func
-        const { about, avatar, name } = result;
-        userProfileName.textContent = name;
-        userProfileDescription.textContent = about;
-        userProfileAvatar.style.cssText = `background-image: url('${avatar}')`;
-      })
-      .catch((err) => {
-        console.log(err);
-        // todo add default values for user
-      }),
+  Promise.all([getUserInfo(), getCardsList()])
+    .then(([user, cards]) => {
+      const { about, avatar, name, _id: userId } = user;
+      userProfileName.textContent = name;
+      userProfileDescription.textContent = about;
+      userProfileAvatar.style.cssText = `background-image: url('${avatar}')`;
 
-    getCardsList()
-      .then((result) => {
-        console.log(result);
-        // todo func
-        result.forEach((card) => {
-          const { name, link } = card;
-          placesWrap.append(
-            createCardElement({ name, link }, cardTemplate, {
-              onDelete: handleDeleteCard,
-              onShow: handleShowCard(
-                modalImage,
-                modalImageCaption,
-                { name, link },
-                openPictureModal,
-              ),
-              onLike: handleLikeCard,
-            }),
-          );
-        });
-      })
-      .catch((err) => {
-        console.log(err);
-        // todo add default values for cards?
-      }),
-  ]);
+      cards.forEach((card) => {
+        const { name, link, _id: cardId } = card;
+        console.log(`userId: ${userId} cardId: ${card._id}`);
+        placesWrap.append(
+          createCardElement(cardTemplate, {
+            cardData: card,
+            userId: userId,
+            onDelete: () => handleDeleteCard(cardId),
+            onShow: handleShowCard(
+              modalImage,
+              modalImageCaption,
+              { name, link },
+              openPictureModal,
+            ),
+            onLike: handleLikeCard,
+          }),
+        );
+      });
+    })
+    .catch(console.log);
 });
