@@ -175,42 +175,44 @@ formElementAddCard.addEventListener('submit', (e) => {
 enableValidation(allFormsList);
 
 document.addEventListener('DOMContentLoaded', () => {
-  getUserInfo()
-    .then((result) => {
-      console.log(result);
-      // todo func
-      const { about, avatar, name } = result;
-      userProfileName.textContent = name;
-      userProfileDescription.textContent = about;
-      userProfileAvatar.style.cssText = `background-image: url('${avatar}')`;
-    })
-    .catch((err) => {
-      console.log(err);
-      // todo add default values for user
-    });
+  Promise.all([
+    getUserInfo()
+      .then((result) => {
+        console.log(result);
+        // todo func
+        const { about, avatar, name } = result;
+        userProfileName.textContent = name;
+        userProfileDescription.textContent = about;
+        userProfileAvatar.style.cssText = `background-image: url('${avatar}')`;
+      })
+      .catch((err) => {
+        console.log(err);
+        // todo add default values for user
+      }),
 
-  getCardsList()
-    .then((result) => {
-      console.log(result);
-      // todo func
-      result.forEach((card) => {
-        const { name, link } = card;
-        placesWrap.append(
-          createCardElement({ name, link }, cardTemplate, {
-            onDelete: handleDeleteCard,
-            onShow: handleShowCard(
-              modalImage,
-              modalImageCaption,
-              { name, link },
-              openPictureModal,
-            ),
-            onLike: handleLikeCard,
-          }),
-        );
-      });
-    })
-    .catch((err) => {
-      console.log(err);
-      // todo add default values for cards?
-    });
+    getCardsList()
+      .then((result) => {
+        console.log(result);
+        // todo func
+        result.forEach((card) => {
+          const { name, link } = card;
+          placesWrap.append(
+            createCardElement({ name, link }, cardTemplate, {
+              onDelete: handleDeleteCard,
+              onShow: handleShowCard(
+                modalImage,
+                modalImageCaption,
+                { name, link },
+                openPictureModal,
+              ),
+              onLike: handleLikeCard,
+            }),
+          );
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        // todo add default values for cards?
+      }),
+  ]);
 });
