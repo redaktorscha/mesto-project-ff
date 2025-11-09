@@ -19,6 +19,8 @@ import {
 } from './components/utils.js';
 import { enableValidation, clearValidation } from './components/validation.js';
 
+import { getUserInfo } from './components/api.js';
+
 // places card template
 const cardTemplate = document
   .querySelector('#card-template')
@@ -39,6 +41,7 @@ const allFormsList = [...document.querySelectorAll('.popup__form')];
 // user info selectors
 const userProfileName = document.querySelector('.profile__title');
 const userProfileDescription = document.querySelector('.profile__description');
+const userProfileAvatar = document.querySelector('.profile__image');
 
 // buttons for modals
 const profileEditBtn = document.querySelector('.profile__edit-button');
@@ -170,3 +173,19 @@ initialCards.forEach((data) => {
 });
 
 enableValidation(allFormsList);
+
+document.addEventListener('DOMContentLoaded', () => {
+  getUserInfo()
+    .then((result) => {
+      console.log(result);
+      // todo func
+      const { about, avatar, name } = result;
+      userProfileName.textContent = name;
+      userProfileDescription.textContent = about;
+      userProfileAvatar.style.cssText = `background-image: url('${avatar}')`;
+    })
+    .catch((err) => {
+      console.log(err);
+      // todo add default values for user
+    });
+});
