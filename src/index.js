@@ -19,7 +19,7 @@ import {
 } from './components/utils.js';
 import { enableValidation, clearValidation } from './components/validation.js';
 
-import { getUserInfo } from './components/api.js';
+import { getUserInfo, getCardsList } from './components/api.js';
 
 // places card template
 const cardTemplate = document
@@ -157,20 +157,20 @@ formElementAddCard.addEventListener('submit', (e) => {
 });
 
 // create initial cards
-initialCards.forEach((data) => {
-  placesWrap.append(
-    createCardElement(data, cardTemplate, {
-      onDelete: handleDeleteCard,
-      onShow: handleShowCard(
-        modalImage,
-        modalImageCaption,
-        data,
-        openPictureModal,
-      ),
-      onLike: handleLikeCard,
-    }),
-  );
-});
+// initialCards.forEach((data) => {
+//   placesWrap.append(
+//     createCardElement(data, cardTemplate, {
+//       onDelete: handleDeleteCard,
+//       onShow: handleShowCard(
+//         modalImage,
+//         modalImageCaption,
+//         data,
+//         openPictureModal,
+//       ),
+//       onLike: handleLikeCard,
+//     }),
+//   );
+// });
 
 enableValidation(allFormsList);
 
@@ -187,5 +187,30 @@ document.addEventListener('DOMContentLoaded', () => {
     .catch((err) => {
       console.log(err);
       // todo add default values for user
+    });
+
+  getCardsList()
+    .then((result) => {
+      console.log(result);
+      // todo func
+      result.forEach((card) => {
+        const { name, link } = card;
+        placesWrap.append(
+          createCardElement({ name, link }, cardTemplate, {
+            onDelete: handleDeleteCard,
+            onShow: handleShowCard(
+              modalImage,
+              modalImageCaption,
+              { name, link },
+              openPictureModal,
+            ),
+            onLike: handleLikeCard,
+          }),
+        );
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+      // todo add default values for cards?
     });
 });

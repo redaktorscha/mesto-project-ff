@@ -40,11 +40,21 @@ const endPoints = {
 
 /**
  * @typedef {Object} User
- * @property {string} _id
  * @property {string} name
  * @property {string} about
  * @property {string} avatar
+ * @property {string} _id
  * @property {string} cohort
+ */
+
+/**
+ * @typedef {Object} Card
+ * @property {Array} likes
+ * @property {string} _id
+ * @property {string} name
+ * @property {string} link
+ * @property {User} owner
+ * @property {string} createdAt
  */
 
 /**
@@ -63,9 +73,10 @@ const getUserInfo = () => {
   );
 };
 
-// для загрузки данных пользователя и карточек необходимо воспользоваться методом Promise.all()
-// todo check userId
-// get cards list (name, link, _id)
+/**
+ *
+ * @returns {Promise<Card[]>}
+ */
 const getCardsList = () => {
   return fetch(endPoints.cardsGet(), { headers: apiConfig.authHeaders }).then(
     (response) => {
@@ -222,4 +233,4 @@ const checkIsPicture = (link) => {
   });
 };
 
-export { getUserInfo };
+export { getUserInfo, getCardsList };
