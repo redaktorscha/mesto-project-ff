@@ -19,7 +19,11 @@ import {
 } from './components/utils.js';
 import { enableValidation, clearValidation } from './components/validation.js';
 
-import { getUserInfo, getCardsList } from './components/api.js';
+import {
+  getUserInfo,
+  getCardsList,
+  editUserProfile,
+} from './components/api.js';
 
 // places card template
 const cardTemplate = document
@@ -119,12 +123,19 @@ cardAddBtn.addEventListener('click', (_) => {
 // submit edit profile form
 formElementEditProfile.addEventListener('submit', (e) => {
   e.preventDefault();
-  fillInUserInfoProfile(
-    editProfileInputName,
-    editProfileInputDescription,
-    userProfileName,
-    userProfileDescription,
-  );
+
+  editUserProfile(editProfileInputName.value, editProfileInputDescription.value)
+    .then((result) => {
+      userProfileName.textContent = result.name;
+      userProfileDescription.textContent = result.about;
+    })
+    .catch(console.log);
+  // fillInUserInfoProfile(
+  //   editProfileInputName,
+  //   editProfileInputDescription,
+  //   userProfileName,
+  //   userProfileDescription,
+  // );
   const openedModal = getOpenedModal();
   closeModal(openedModal);
   formElementEditProfile.reset();
@@ -174,6 +185,7 @@ formElementAddCard.addEventListener('submit', (e) => {
 
 enableValidation(allFormsList);
 
+// todo add _id
 document.addEventListener('DOMContentLoaded', () => {
   Promise.all([
     getUserInfo()

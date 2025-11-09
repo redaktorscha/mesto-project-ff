@@ -93,7 +93,7 @@ const getCardsList = () => {
  *
  * @param {string} newUserName
  * @param {string} newUserDescription
- * @returns {Promise}
+ * @returns {Promise<User>}
  */
 const editUserProfile = (newUserName, newUserDescription) => {
   return fetch(endPoints.userPatch(), {
@@ -233,4 +233,4 @@ const checkIsPicture = (link) => {
   });
 };
 
-export { getUserInfo, getCardsList };
+export { getUserInfo, getCardsList, editUserProfile };
