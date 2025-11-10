@@ -17,6 +17,14 @@ const createCardElement = (
     deleteButton.classList.add('card__delete-button_is-hidden');
   }
   const cardLikeBtn = cardElement.querySelector('.card__like-button');
+  const { likes } = cardData;
+  const likesCount = likes.length;
+  if (likesCount > 0) {
+    const likesContainer = e.target.closest('.card__likes');
+    const likesCounter = likesContainer.querySelector('.card__like-counter');
+    likesCounter.text = `${likesCount}`;
+    e.target.classList.add('card__like-button_is-active');
+  }
 
   const cardImage = cardElement.querySelector('.card__image');
   cardImage.src = data.link;
