@@ -49,19 +49,33 @@ const handleLikeCard = (e, cardId) => {
   if (e.target.classList.contains('card__like-button_is-active')) {
     decrementLikes(cardId)
       .then((card) => {
-        // todo update card likes & remove card__like-button_is-active class
+        // todo func
+        const { likes } = card;
+        const likesCount = likes.length;
+        const likesContainer = e.target.closest('.card__likes');
+        const likesCounter = likesContainer.querySelector(
+          '.card__like-counter',
+        );
+        likesCounter.text = `${likesCount}`;
+        e.target.classList.toggle('card__like-button_is-active');
       })
       .catch(console.log);
   } else {
     // put like
     incrementLikes(cardId)
       .then((card) => {
-        // todo update card & add card__like-button_is-active class
+        // todo func
+        const { likes } = card;
+        const likesCount = likes.length;
+        const likesContainer = e.target.closest('.card__likes');
+        const likesCounter = likesContainer.querySelector(
+          '.card__like-counter',
+        );
+        likesCounter.text = `${likesCount}`;
+        e.target.classList.toggle('card__like-button_is-active');
       })
       .catch(console.log);
   }
-
-  e.target.classList.toggle('card__like-button_is-active');
 };
 
 /**

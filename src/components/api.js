@@ -158,7 +158,7 @@ const deleteCard = (cardId) => {
 /**
  *
  * @param {string} cardId
- * @returns {Promise}
+ * @returns {Promise<Card>}
  */
 const incrementLikes = (cardId) => {
   return fetch(endPoints.cardLikePut(cardId), {
@@ -176,7 +176,7 @@ const incrementLikes = (cardId) => {
 /**
  *
  * @param {string} cardId
- * @returns {Promise}
+ * @returns {Promise<Card>}
  */
 const decrementLikes = (cardId) => {
   return fetch(endPoints.cardLikeDelete(cardId), {
