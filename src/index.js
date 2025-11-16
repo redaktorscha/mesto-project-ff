@@ -36,6 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const cardAddModal = document.querySelector('.popup_type_new-card');
   const openPictureModal = document.querySelector('.popup_type_image');
   const avatarEditModal = document.querySelector('.popup_type_edit-avatar');
+  const deleteCardModal = document.querySelector('.popup_type_delete-card');
   const allModals = document.querySelectorAll('.popup');
 
   //all forms
@@ -85,6 +86,11 @@ document.addEventListener('DOMContentLoaded', () => {
   );
   const editAvatarInputLink = document.querySelector(
     '.popup__input_type_avatar-link',
+  );
+
+  // delete card selectors
+  const formElementDeleteCard = document.querySelector(
+    '.popup__form[name="delete-card"]',
   );
 
   /**
@@ -162,7 +168,16 @@ document.addEventListener('DOMContentLoaded', () => {
           createCardElement(cardTemplate, {
             cardData: card,
             userId: owner._id,
-            onDelete: handleDeleteCard,
+            onDelete: () => {
+              openModal(deleteCardModal);
+              formElementDeleteCard.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const currentCard = document.querySelector(
+                  `[data-id="${card._id}"]`,
+                );
+                handleDeleteCard(currentCard, card._id);
+              });
+            },
             onShow: handleShowCard(
               modalImage,
               modalImageCaption,
@@ -216,13 +231,21 @@ document.addEventListener('DOMContentLoaded', () => {
       userProfileAvatar.style.cssText = `background-image: url('${avatar}')`;
 
       cards.forEach((card) => {
-        const { name, link, _id: cardId } = card;
-        console.log(`userId: ${userId} cardId: ${cardId}`);
+        const { name, link } = card;
         placesWrap.append(
           createCardElement(cardTemplate, {
             cardData: card,
             userId: userId,
-            onDelete: handleDeleteCard,
+            onDelete: () => {
+              openModal(deleteCardModal);
+              formElementDeleteCard.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const currentCard = document.querySelector(
+                  `[data-id="${card._id}"]`,
+                );
+                handleDeleteCard(currentCard, card._id);
+              });
+            },
             onShow: handleShowCard(
               modalImage,
               modalImageCaption,

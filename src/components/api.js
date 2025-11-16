@@ -224,8 +224,7 @@ const checkIsPicture = (link) => {
     method: 'HEAD',
   }).then((response) => {
     if (response.ok) {
-      const { contentType } = response.headers;
-      console.log(`checkIsPicture headers: ${response.headers}`);
+      const contentType = response.headers.get('Content-Type');
       return imagesContentTypes.includes(contentType);
     } else {
       return Promise.reject(`Unable change user avatar, ${response.status}`);

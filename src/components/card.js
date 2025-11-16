@@ -1,4 +1,5 @@
 import { deleteCard, Card, incrementLikes, decrementLikes } from './api.js';
+import { openModal } from './modal.js';
 
 /**
  *
@@ -11,6 +12,7 @@ const createCardElement = (
   { cardData, userId, onDelete, onShow, onLike } = {},
 ) => {
   const cardElement = template.cloneNode(true);
+  cardElement.dataset.id = cardData._id;
   const deleteButton = cardElement.querySelector('.card__delete-button');
   const isOwnCard = cardData.owner._id === userId;
   if (!isOwnCard) {
@@ -34,7 +36,7 @@ const createCardElement = (
   cardElement.querySelector('.card__title').textContent = cardData.name;
 
   if (onDelete && isOwnCard) {
-    deleteButton.addEventListener('click', (e) => onDelete(e, cardData._id));
+    deleteButton.addEventListener('click', onDelete);
   }
 
   if (onShow) {
@@ -89,13 +91,13 @@ const handleLikeCard = (e, cardId) => {
 
 /**
  *
- * @param {Event} e
+ * @param {HTMLLiElement} cardElement
  * @param {string} cardId
  */
-const handleDeleteCard = (e, cardId) => {
+const handleDeleteCard = (cardElement, cardId) => {
   deleteCard(cardId)
     .then((_) => {
-      e.target.closest('.card').remove();
+      cardElement.remove();
     })
     .catch(console.log);
 };
