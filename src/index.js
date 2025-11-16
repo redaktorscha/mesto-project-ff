@@ -1,5 +1,4 @@
 import './pages/index.css';
-// import { initialCards } from './components/cards.js';
 import {
   openModal,
   closeModal,
@@ -11,12 +10,7 @@ import {
   handleDeleteCard,
 } from './components/card.js';
 
-import {
-  fillInUserInfoCard,
-  //fillInUserInfoProfile,
-  getNewCardData,
-  getOpenedModal,
-} from './components/utils.js';
+import { fillInUserInfoCard, getOpenedModal } from './components/utils.js';
 import { enableValidation, clearValidation } from './components/validation.js';
 
 import {
@@ -142,21 +136,11 @@ formElementEditProfile.addEventListener('submit', (e) => {
       formElementEditProfile.reset();
     })
     .catch(console.log);
-  // fillInUserInfoProfile(
-  //   editProfileInputName,
-  //   editProfileInputDescription,
-  //   userProfileName,
-  //   userProfileDescription,
-  // );
 });
 
 // submit add card form
 formElementAddCard.addEventListener('submit', (e) => {
   e.preventDefault();
-  // const newCardData = getNewCardData(
-  //   addCardInputPlaceName,
-  //   addCardInputPlaceLink,
-  // );
 
   addNewCard(addCardInputPlaceName.value, addCardInputPlaceLink.value).then(
     (card) => {
