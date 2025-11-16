@@ -24,6 +24,8 @@ import {
   getCardsList,
   editUserProfile,
   addNewCard,
+  checkIsPicture,
+  changeUserAvatar,
 } from './components/api.js';
 
 // places card template
@@ -38,6 +40,7 @@ const placesWrap = document.querySelector('.places__list');
 const profileEditModal = document.querySelector('.popup_type_edit');
 const cardAddModal = document.querySelector('.popup_type_new-card');
 const openPictureModal = document.querySelector('.popup_type_image');
+// const avatarEditModal; // todo
 const allModals = document.querySelectorAll('.popup');
 
 //all forms
@@ -74,6 +77,10 @@ const addCardInputPlaceName = document.querySelector(
   '.popup__input_type_card-name',
 );
 const addCardInputPlaceLink = document.querySelector('.popup__input_type_url');
+
+// edit avatar selectors todo
+// const formElementEditAvatar;
+// const editAvatarInputLink;
 
 /**
  *
@@ -176,6 +183,25 @@ formElementAddCard.addEventListener('submit', (e) => {
   );
 });
 
+userProfileAvatar.addEventListener('click', () => {
+  openModal(avatarEditModal);
+});
+
+// formElementEditAvatar.addEventListener('submit', (e) => {
+//   e.preventDefault();
+//   checkIsPicture(editAvatarInputLink.value)
+//     .then((isPicture) => {
+//       if (isPicture) {
+//         return editAvatarInputLink.value;
+//       }
+//       return Promise.reject('not a picture');
+//     })
+//     .then((value) => changeUserAvatar(value))
+//     .then((avatar) => {
+//       userProfileAvatar.style.cssText = `background-image: url('${avatar}')`;
+//     })
+//     .catch(console.log);
+// });
 // todo add _id
 document.addEventListener('DOMContentLoaded', () => {
   enableValidation(allFormsList);
@@ -189,7 +215,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       cards.forEach((card) => {
         const { name, link, _id: cardId } = card;
-        console.log(`userId: ${userId} cardId: ${card._id}`);
+        console.log(`userId: ${userId} cardId: ${cardId}`);
         placesWrap.append(
           createCardElement(cardTemplate, {
             cardData: card,

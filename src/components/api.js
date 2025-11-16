@@ -241,4 +241,6 @@ export {
   deleteCard,
   incrementLikes,
   decrementLikes,
+  checkIsPicture,
+  changeUserAvatar,
 };

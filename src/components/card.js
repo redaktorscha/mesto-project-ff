@@ -20,17 +20,18 @@ const createCardElement = (
   const { likes } = cardData;
   const likesCount = likes.length;
   if (likesCount > 0) {
-    const likesContainer = e.target.closest('.card__likes');
+    const likesContainer = cardElement.querySelector('.card__likes');
     const likesCounter = likesContainer.querySelector('.card__like-counter');
-    likesCounter.text = `${likesCount}`;
-    e.target.classList.add('card__like-button_is-active');
+    likesCounter.textContent = `${likesCount}`;
+    likesCounter.classList.add('card__like-counter_is-active');
+    cardLikeBtn.classList.add('card__like-button_is-active');
   }
 
   const cardImage = cardElement.querySelector('.card__image');
-  cardImage.src = data.link;
-  cardImage.alt = data.name;
+  cardImage.src = cardData.link;
+  cardImage.alt = cardData.name;
 
-  cardElement.querySelector('.card__title').textContent = data.name;
+  cardElement.querySelector('.card__title').textContent = cardData.name;
 
   if (onDelete && isOwnCard) {
     deleteButton.addEventListener('click', (e) => onDelete(e, cardData._id));
@@ -64,7 +65,7 @@ const handleLikeCard = (e, cardId) => {
         const likesCounter = likesContainer.querySelector(
           '.card__like-counter',
         );
-        likesCounter.text = `${likesCount}`;
+        likesCounter.textContent = `${likesCount}`;
         e.target.classList.toggle('card__like-button_is-active');
       })
       .catch(console.log);
@@ -79,7 +80,7 @@ const handleLikeCard = (e, cardId) => {
         const likesCounter = likesContainer.querySelector(
           '.card__like-counter',
         );
-        likesCounter.text = `${likesCount}`;
+        likesCounter.textContent = `${likesCount}`;
         e.target.classList.toggle('card__like-button_is-active');
       })
       .catch(console.log);
