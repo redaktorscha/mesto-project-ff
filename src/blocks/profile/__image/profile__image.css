@@ -10,6 +10,10 @@
   margin: 0 29px 0 0;
 }
 
+.profile__image:hover {
+  cursor: pointer;
+}
+
 .profile__image::before {
   content: '';
   position: absolute;
