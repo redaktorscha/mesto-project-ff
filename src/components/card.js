@@ -67,7 +67,13 @@ const handleLikeCard = (e, cardId) => {
         const likesCounter = likesContainer.querySelector(
           '.card__like-counter',
         );
-        likesCounter.textContent = `${likesCount}`;
+        if (likesCount > 0) {
+          likesCounter.textContent = `${likesCount}`;
+          likesCounter.classList.add('card__like-counter_is-active');
+        } else {
+          likesCounter.classList.remove('card__like-counter_is-active');
+        }
+
         e.target.classList.toggle('card__like-button_is-active');
       })
       .catch(console.log);
@@ -82,7 +88,13 @@ const handleLikeCard = (e, cardId) => {
         const likesCounter = likesContainer.querySelector(
           '.card__like-counter',
         );
-        likesCounter.textContent = `${likesCount}`;
+        if (likesCount > 0) {
+          likesCounter.textContent = `${likesCount}`;
+          likesCounter.classList.add('card__like-counter_is-active');
+        } else {
+          likesCounter.classList.remove('card__like-counter_is-active');
+        }
+
         e.target.classList.toggle('card__like-button_is-active');
       })
       .catch(console.log);
