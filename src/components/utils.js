@@ -17,4 +17,14 @@ const fillInUserInfoCard = (
   inputDescription.value = profileDescription.textContent;
 };
 
-export { getOpenedModal, fillInUserInfoCard };
+/**
+ *
+ * @param {Event} e
+ * @param {boolean} isLoading
+ */
+const toggleButtonText = (e, isLoading) => {
+  const button = e.target.querySelector('.popup__button');
+  button.textContent = isLoading ? 'Сохранение...' : 'Сохранить';
+};
+
+export { getOpenedModal, fillInUserInfoCard, toggleButtonText };

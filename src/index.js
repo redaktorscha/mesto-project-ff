@@ -10,7 +10,11 @@ import {
   handleDeleteCard,
 } from './components/card.js';
 
-import { fillInUserInfoCard, getOpenedModal } from './components/utils.js';
+import {
+  fillInUserInfoCard,
+  getOpenedModal,
+  toggleButtonText,
+} from './components/utils.js';
 import { enableValidation, clearValidation } from './components/validation.js';
 
 import {
@@ -95,6 +99,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
   /**
    *
+   * @param {Event} e
+   */
+  const onSuccessfulSubmit = (e) => {
+    setTimeout(() => {
+      toggleButtonText(e, false);
+      const openedModal = getOpenedModal();
+      closeModal(openedModal);
+      e.target.reset();
+    }, 1000);
+  };
+
+  /**
+   *
    * @param {HTMLImageElement} imageElem
    * @param {HTMLImageElement} imageCaption
    * @param {{name: string, link: string}} imageData
@@ -142,7 +159,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // submit edit profile form
   formElementEditProfile.addEventListener('submit', (e) => {
     e.preventDefault();
-    // todo add loading text
+    toggleButtonText(e, true);
 
     editUserProfile(
       editProfileInputName.value,
@@ -151,9 +168,7 @@ document.addEventListener('DOMContentLoaded', () => {
       .then((user) => {
         userProfileName.textContent = user.name;
         userProfileDescription.textContent = user.about;
-        const openedModal = getOpenedModal();
-        closeModal(openedModal);
-        formElementEditProfile.reset();
+        onSuccessfulSubmit(e);
       })
       .catch(console.log);
   });
