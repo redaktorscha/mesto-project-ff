@@ -142,6 +142,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // submit edit profile form
   formElementEditProfile.addEventListener('submit', (e) => {
     e.preventDefault();
+    // todo add loading text
 
     editUserProfile(
       editProfileInputName.value,
@@ -161,6 +162,7 @@ document.addEventListener('DOMContentLoaded', () => {
   formElementAddCard.addEventListener('submit', (e) => {
     e.preventDefault();
 
+    // todo add loading text
     addNewCard(addCardInputPlaceName.value, addCardInputPlaceLink.value)
       .then((card) => {
         const { name, link, owner, _id: cardId } = card;
@@ -172,6 +174,8 @@ document.addEventListener('DOMContentLoaded', () => {
               openModal(deleteCardModal);
               formElementDeleteCard.addEventListener('submit', (e) => {
                 e.preventDefault();
+
+                // todo add loading text
                 const currentCard = document.querySelector(
                   `[data-id="${card._id}"]`,
                 );
@@ -204,6 +208,8 @@ document.addEventListener('DOMContentLoaded', () => {
   // submit edit avatar form
   formElementEditAvatar.addEventListener('submit', (e) => {
     e.preventDefault();
+
+    // todo add loading text
     checkIsPicture(editAvatarInputLink.value)
       .then((isPicture) => {
         if (isPicture) {
@@ -240,6 +246,8 @@ document.addEventListener('DOMContentLoaded', () => {
               openModal(deleteCardModal);
               formElementDeleteCard.addEventListener('submit', (e) => {
                 e.preventDefault();
+
+                // todo add loading text
                 const currentCard = document.querySelector(
                   `[data-id="${card._id}"]`,
                 );
