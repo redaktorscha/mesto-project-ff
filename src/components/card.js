@@ -60,45 +60,37 @@ const handleLikeCard = (e, cardId) => {
   if (e.target.classList.contains('card__like-button_is-active')) {
     decrementLikes(cardId)
       .then((card) => {
-        // todo func
-        const { likes } = card;
-        const likesCount = likes.length;
-        const likesContainer = e.target.closest('.card__likes');
-        const likesCounter = likesContainer.querySelector(
-          '.card__like-counter',
-        );
-        if (likesCount > 0) {
-          likesCounter.textContent = `${likesCount}`;
-          likesCounter.classList.add('card__like-counter_is-active');
-        } else {
-          likesCounter.classList.remove('card__like-counter_is-active');
-        }
-
-        e.target.classList.toggle('card__like-button_is-active');
+        updateLikesUi(e.target, card);
       })
       .catch(console.log);
   } else {
     // put like
     incrementLikes(cardId)
       .then((card) => {
-        // todo func
-        const { likes } = card;
-        const likesCount = likes.length;
-        const likesContainer = e.target.closest('.card__likes');
-        const likesCounter = likesContainer.querySelector(
-          '.card__like-counter',
-        );
-        if (likesCount > 0) {
-          likesCounter.textContent = `${likesCount}`;
-          likesCounter.classList.add('card__like-counter_is-active');
-        } else {
-          likesCounter.classList.remove('card__like-counter_is-active');
-        }
-
-        e.target.classList.toggle('card__like-button_is-active');
+        updateLikesUi(e.target, card);
       })
       .catch(console.log);
   }
+};
+
+/**
+ *
+ * @param {HTMLButtonElement} likesButton
+ * @param {Card} card
+ */
+const updateLikesUi = (likesButton, card) => {
+  const { likes } = card;
+  const likesCount = likes.length;
+  const likesContainer = likesButton.closest('.card__likes');
+  const likesCounter = likesContainer.querySelector('.card__like-counter');
+  if (likesCount > 0) {
+    likesCounter.textContent = `${likesCount}`;
+    likesCounter.classList.add('card__like-counter_is-active');
+  } else {
+    likesCounter.classList.remove('card__like-counter_is-active');
+  }
+
+  likesButton.classList.toggle('card__like-button_is-active');
 };
 
 /**
