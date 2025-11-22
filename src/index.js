@@ -26,6 +26,11 @@ import {
   changeUserAvatar,
 } from './components/api.js';
 
+const loadingButtonText = 'Сохранение...';
+const loadedButtonText = 'Сохранить';
+const loadingButtonTextDelete = 'Удаление...';
+const loadedButtonTextDelete = 'Да';
+
 document.addEventListener('DOMContentLoaded', () => {
   // places card template
   const cardTemplate = document
@@ -100,10 +105,11 @@ document.addEventListener('DOMContentLoaded', () => {
   /**
    *
    * @param {Event} e
+   * @param {string} newText
    */
-  const onSuccessfulSubmit = (e) => {
+  const onSuccessfulSubmit = (e, newText) => {
     setTimeout(() => {
-      toggleButtonText(e, false);
+      toggleButtonText(e, newText);
       const openedModal = getOpenedModal();
       closeModal(openedModal);
       e.target.reset();
@@ -159,7 +165,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // submit edit profile form
   formElementEditProfile.addEventListener('submit', (e) => {
     e.preventDefault();
-    toggleButtonText(e, true);
+    toggleButtonText(e, loadingButtonText);
 
     editUserProfile(
       editProfileInputName.value,
@@ -168,7 +174,7 @@ document.addEventListener('DOMContentLoaded', () => {
       .then((user) => {
         userProfileName.textContent = user.name;
         userProfileDescription.textContent = user.about;
-        onSuccessfulSubmit(e);
+        onSuccessfulSubmit(e, loadedButtonText);
       })
       .catch(console.log);
   });
@@ -176,6 +182,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // submit add card form
   formElementAddCard.addEventListener('submit', (e) => {
     e.preventDefault();
+    toggleButtonText(e, loadingButtonText);
 
     // todo add loading text
     addNewCard(addCardInputPlaceName.value, addCardInputPlaceLink.value)
@@ -189,12 +196,14 @@ document.addEventListener('DOMContentLoaded', () => {
               openModal(deleteCardModal);
               formElementDeleteCard.addEventListener('submit', (e) => {
                 e.preventDefault();
+                toggleButtonText(e, loadedButtonTextDelete);
 
-                // todo add loading text
                 const currentCard = document.querySelector(
                   `[data-id="${card._id}"]`,
                 );
-                handleDeleteCard(currentCard, card._id);
+                handleDeleteCard(currentCard, card._id).then(() => {
+                  onSuccessfulSubmit(e, loadedButtonTextDelete);
+                });
               });
             },
             onShow: handleShowCard(
@@ -206,9 +215,7 @@ document.addEventListener('DOMContentLoaded', () => {
             onLike: handleLikeCard,
           }),
         );
-        const openedModal = getOpenedModal();
-        closeModal(openedModal);
-        formElementAddCard.reset();
+        onSuccessfulSubmit(e, loadedButtonText);
         clearValidation(formElementAddCard);
       })
       .catch(console.log);
@@ -223,8 +230,8 @@ document.addEventListener('DOMContentLoaded', () => {
   // submit edit avatar form
   formElementEditAvatar.addEventListener('submit', (e) => {
     e.preventDefault();
+    toggleButtonText(e, loadingButtonText);
 
-    // todo add loading text
     checkIsPicture(editAvatarInputLink.value)
       .then((isPicture) => {
         if (isPicture) {
@@ -235,9 +242,7 @@ document.addEventListener('DOMContentLoaded', () => {
       .then((value) => changeUserAvatar(value))
       .then((avatar) => {
         userProfileAvatar.style.cssText = `background-image: url('${avatar}')`;
-        formElementEditAvatar.reset();
-        const openedModal = getOpenedModal();
-        closeModal(openedModal);
+        onSuccessfulSubmit(e, loadedButtonText);
       })
       .catch(console.log);
   });

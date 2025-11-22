@@ -20,11 +20,11 @@ const fillInUserInfoCard = (
 /**
  *
  * @param {Event} e
- * @param {boolean} isLoading
+ * @param {string} newText
  */
-const toggleButtonText = (e, isLoading) => {
+const toggleButtonText = (e, newText) => {
   const button = e.target.querySelector('.popup__button');
-  button.textContent = isLoading ? 'Сохранение...' : 'Сохранить';
+  button.textContent = newText;
 };
 
 export { getOpenedModal, fillInUserInfoCard, toggleButtonText };
