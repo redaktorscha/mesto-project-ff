@@ -4,6 +4,8 @@
 
 ---
 
+![Проектная работа Mesto](https://github.com/redaktorscha/mesto-project-ff/blob/843424859e1e58dafd744a76983d0ba4b93bdd42/src/images/mesto_project.png)
+
 ### О проекте
 
 Сайт, где можно выкладывать фотографии различных локаций с кратким описанием и ставить лайки.
