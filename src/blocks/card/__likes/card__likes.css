@@ -2,6 +2,6 @@
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
-  justify-content: center;
-  gap: 5px;
+  justify-content: space-between;
+  height: 35px;
 }
