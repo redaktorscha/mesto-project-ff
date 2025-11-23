@@ -36,8 +36,6 @@ const endPoints = {
     `${apiConfig.apiBaseUrl}/v1/${apiConfig.cohortId}/users/me/avatar`,
 };
 
-// todo util for error messages
-
 /**
  * @typedef {Object} User
  * @property {string} name

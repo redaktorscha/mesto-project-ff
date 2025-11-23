@@ -109,11 +109,11 @@ document.addEventListener('DOMContentLoaded', () => {
    */
   const onSuccessfulSubmit = (e, newText) => {
     setTimeout(() => {
-      toggleButtonText(e, newText);
       const openedModal = getOpenedModal();
       closeModal(openedModal);
       e.target.reset();
-    }, 1000);
+      toggleButtonText(e, newText);
+    }, 500);
   };
 
   /**
@@ -184,7 +184,6 @@ document.addEventListener('DOMContentLoaded', () => {
     e.preventDefault();
     toggleButtonText(e, loadingButtonText);
 
-    // todo add loading text
     addNewCard(addCardInputPlaceName.value, addCardInputPlaceLink.value)
       .then((card) => {
         const { name, link, owner, _id: cardId } = card;
@@ -201,9 +200,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 const currentCard = document.querySelector(
                   `[data-id="${cardId}"]`,
                 );
-                handleDeleteCard(currentCard, cardId).then(() => {
-                  onSuccessfulSubmit(e, loadedButtonTextDelete);
-                });
+                handleDeleteCard(currentCard, cardId, () =>
+                  onSuccessfulSubmit(e, loadedButtonTextDelete),
+                );
               });
             },
             onShow: handleShowCard(
@@ -267,11 +266,13 @@ document.addEventListener('DOMContentLoaded', () => {
               formElementDeleteCard.addEventListener('submit', (e) => {
                 e.preventDefault();
 
-                // todo add loading text
+                toggleButtonText(e, loadingButtonTextDelete);
                 const currentCard = document.querySelector(
                   `[data-id="${card._id}"]`,
                 );
-                handleDeleteCard(currentCard, card._id);
+                handleDeleteCard(currentCard, card._id, () =>
+                  onSuccessfulSubmit(e, loadedButtonTextDelete),
+                );
               });
             },
             onShow: handleShowCard(
