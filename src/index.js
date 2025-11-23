@@ -199,9 +199,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 toggleButtonText(e, loadedButtonTextDelete);
 
                 const currentCard = document.querySelector(
-                  `[data-id="${card._id}"]`,
+                  `[data-id="${cardId}"]`,
                 );
-                handleDeleteCard(currentCard, card._id).then(() => {
+                handleDeleteCard(currentCard, cardId).then(() => {
                   onSuccessfulSubmit(e, loadedButtonTextDelete);
                 });
               });
