@@ -48,9 +48,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const deleteCardModal = document.querySelector('.popup_type_delete-card');
   const allModals = document.querySelectorAll('.popup');
 
-  //all forms
-  const allFormsList = [...document.querySelectorAll('.popup__form')];
-
   // user info selectors
   const userProfileName = document.querySelector('.profile__title');
   const userProfileDescription = document.querySelector(
@@ -246,7 +243,14 @@ document.addEventListener('DOMContentLoaded', () => {
       .catch(console.log);
   });
 
-  enableValidation(allFormsList);
+  enableValidation({
+    formSelector: '.popup__form',
+    inputSelector: '.popup__input',
+    submitButtonSelector: '.popup__button',
+    inactiveButtonClass: 'popup__button_disabled',
+    inputErrorClass: 'popup__input_type_error',
+    errorClass: 'popup__error_visible',
+  });
 
   Promise.all([getUserInfo(), getCardsList()])
     .then(([user, cards]) => {

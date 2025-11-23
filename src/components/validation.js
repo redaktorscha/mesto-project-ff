@@ -1,4 +1,14 @@
 /**
+ * @typedef {Object} ValidationConfig
+ * @property {string} formSelector
+ * @property {string} inputSelector
+ * @property {string} submitButtonSelector
+ * @property {string} inactiveButtonClass
+ * @property {string} inputErrorClass
+ * @property {string} errorClass
+ */
+
+/**
  *
  * @param {HTMLFormElement} formElement
  * @param {HTMLInputElement} inputElement
@@ -88,9 +98,11 @@ const setEventListeners = (formElement) => {
 
 /**
  *
- * @param {Array<HTMLFormElement>} formElements
+ * @param {ValidationConfig} validationConfig
  */
-const enableValidation = (formElements) => {
+const enableValidation = (validationConfig) => {
+  const { formSelector } = validationConfig;
+  const formElements = [...document.querySelectorAll(formSelector)];
   formElements.forEach((elem) => setEventListeners(elem));
 };
 
