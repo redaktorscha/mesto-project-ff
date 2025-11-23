@@ -20,13 +20,17 @@ const createCardElement = (
   }
   const cardLikeBtn = cardElement.querySelector('.card__like-button');
   const { likes } = cardData;
+  const hasOwnLike = likes.some(({ _id }) => _id == userId);
   const likesCount = likes.length;
   if (likesCount > 0) {
     const likesContainer = cardElement.querySelector('.card__likes');
     const likesCounter = likesContainer.querySelector('.card__like-counter');
     likesCounter.textContent = `${likesCount}`;
     likesCounter.classList.add('card__like-counter_is-active');
-    cardLikeBtn.classList.add('card__like-button_is-active');
+
+    if (hasOwnLike) {
+      cardLikeBtn.classList.add('card__like-button_is-active');
+    }
   }
 
   const cardImage = cardElement.querySelector('.card__image');

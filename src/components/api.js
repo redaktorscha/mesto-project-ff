@@ -47,7 +47,7 @@ const endPoints = {
 
 /**
  * @typedef {Object} Card
- * @property {Array} likes
+ * @property {User[]} likes
  * @property {string} _id
  * @property {string} name
  * @property {string} link
