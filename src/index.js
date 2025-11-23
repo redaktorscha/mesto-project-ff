@@ -15,7 +15,11 @@ import {
   getOpenedModal,
   toggleButtonText,
 } from './components/utils.js';
-import { enableValidation, clearValidation } from './components/validation.js';
+import {
+  enableValidation,
+  clearValidation,
+  ValidationConfig,
+} from './components/validation.js';
 
 import {
   getUserInfo,
@@ -100,6 +104,18 @@ document.addEventListener('DOMContentLoaded', () => {
   );
 
   /**
+   * @type {ValidationConfig}
+   */
+  const validationConfig = {
+    formSelector: '.popup__form',
+    inputSelector: '.popup__input',
+    submitButtonSelector: '.popup__button',
+    inactiveButtonClass: 'popup__button_disabled',
+    inputErrorClass: 'popup__input_type_error',
+    errorClass: 'popup__input-error_active',
+  };
+
+  /**
    *
    * @param {Event} e
    * @param {string} newText
@@ -150,7 +166,7 @@ document.addEventListener('DOMContentLoaded', () => {
       userProfileName,
       userProfileDescription,
     );
-    clearValidation(formElementEditProfile);
+    clearValidation(formElementEditProfile, validationConfig);
     openModal(profileEditModal);
   });
 
@@ -212,14 +228,14 @@ document.addEventListener('DOMContentLoaded', () => {
           }),
         );
         onSuccessfulSubmit(e, loadedButtonText);
-        clearValidation(formElementAddCard);
+        clearValidation(formElementAddCard, validationConfig);
       })
       .catch(console.log);
   });
 
   // open edit avatar form on click
   userProfileAvatar.addEventListener('click', () => {
-    clearValidation(formElementEditAvatar);
+    clearValidation(formElementEditAvatar, validationConfig);
     openModal(avatarEditModal);
   });
 
@@ -249,7 +265,7 @@ document.addEventListener('DOMContentLoaded', () => {
     submitButtonSelector: '.popup__button',
     inactiveButtonClass: 'popup__button_disabled',
     inputErrorClass: 'popup__input_type_error',
-    errorClass: 'popup__error_visible',
+    errorClass: 'popup__input-error_active',
   });
 
   Promise.all([getUserInfo(), getCardsList()])
