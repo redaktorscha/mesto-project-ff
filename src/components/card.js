@@ -101,14 +101,21 @@ const updateLikesUi = (likesButton, card) => {
  * @param {HTMLLiElement} cardElement
  * @param {string} cardId
  * @param {Function} onSuccessfulDelete
+ * @param {Function} onFinally
  */
-const handleDeleteCard = (cardElement, cardId, onSuccessfulDelete) => {
+const handleDeleteCard = (
+  cardElement,
+  cardId,
+  onSuccessfulDelete,
+  onFinally,
+) => {
   deleteCard(cardId)
     .then((_) => {
       cardElement.remove();
       onSuccessfulDelete();
     })
-    .catch(console.log);
+    .catch(console.log)
+    .finally(onFinally);
 };
 
 export { createCardElement, handleLikeCard, handleDeleteCard };

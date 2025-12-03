@@ -118,14 +118,12 @@ document.addEventListener('DOMContentLoaded', () => {
   /**
    *
    * @param {Event} e
-   * @param {string} newText
    */
-  const onSuccessfulSubmit = (e, newText) => {
+  const onSuccessfulSubmit = (e) => {
     setTimeout(() => {
       const openedModal = getOpenedModal();
       closeModal(openedModal);
       e.target.reset();
-      toggleButtonText(e, newText);
     }, 500);
   };
 
@@ -187,9 +185,10 @@ document.addEventListener('DOMContentLoaded', () => {
       .then((user) => {
         userProfileName.textContent = user.name;
         userProfileDescription.textContent = user.about;
-        onSuccessfulSubmit(e, loadedButtonText);
+        onSuccessfulSubmit(e);
       })
-      .catch(console.log);
+      .catch(console.log)
+      .finally(() => toggleButtonText(e, loadedButtonText));
   });
 
   // submit add card form
@@ -213,8 +212,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 const currentCard = document.querySelector(
                   `[data-id="${cardId}"]`,
                 );
-                handleDeleteCard(currentCard, cardId, () =>
-                  onSuccessfulSubmit(e, loadedButtonTextDelete),
+                handleDeleteCard(
+                  currentCard,
+                  cardId,
+                  () => onSuccessfulSubmit(e),
+                  () => toggleButtonText(e, loadedButtonTextDelete),
                 );
               });
             },
@@ -227,10 +229,11 @@ document.addEventListener('DOMContentLoaded', () => {
             onLike: handleLikeCard,
           }),
         );
-        onSuccessfulSubmit(e, loadedButtonText);
+        onSuccessfulSubmit(e);
         clearValidation(formElementAddCard, validationConfig);
       })
-      .catch(console.log);
+      .catch(console.log)
+      .finally(() => toggleButtonText(e, loadedButtonText));
   });
 
   // open edit avatar form on click
@@ -254,9 +257,10 @@ document.addEventListener('DOMContentLoaded', () => {
       .then((value) => changeUserAvatar(value))
       .then((avatar) => {
         userProfileAvatar.style.cssText = `background-image: url('${avatar}')`;
-        onSuccessfulSubmit(e, loadedButtonText);
+        onSuccessfulSubmit(e);
       })
-      .catch(console.log);
+      .catch(console.log)
+      .finally(() => toggleButtonText(e, loadedButtonText));
   });
 
   enableValidation({
@@ -290,8 +294,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 const currentCard = document.querySelector(
                   `[data-id="${card._id}"]`,
                 );
-                handleDeleteCard(currentCard, card._id, () =>
-                  onSuccessfulSubmit(e, loadedButtonTextDelete),
+                handleDeleteCard(
+                  currentCard,
+                  card._id,
+                  () => onSuccessfulSubmit(e),
+                  () => toggleButtonText(e, loadedButtonTextDelete),
                 );
               });
             },
