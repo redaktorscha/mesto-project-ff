@@ -4,11 +4,7 @@ import {
   closeModal,
   handleCloseModalOnBtnClick,
 } from './components/modal.js';
-import {
-  createCardElement,
-  handleLikeCard,
-  handleDeleteCard,
-} from './components/card.js';
+import { createCardElement, updateLikesUi } from './components/card.js';
 
 import {
   fillInUserInfoCard,
@@ -113,6 +109,51 @@ document.addEventListener('DOMContentLoaded', () => {
     inactiveButtonClass: 'popup__button_disabled',
     inputErrorClass: 'popup__input_type_error',
     errorClass: 'popup__input-error_active',
+  };
+
+  /**
+   *
+   * @param {Event} e
+   * @param {string} cardId
+   */
+  const handleLikeCard = (e, cardId) => {
+    // delete like
+    if (e.target.classList.contains('card__like-button_is-active')) {
+      handleLikes(cardId, 'DELETE')
+        .then((card) => {
+          updateLikesUi(e.target, card);
+        })
+        .catch(console.log);
+    } else {
+      // put like
+      handleLikes(cardId, 'PUT')
+        .then((card) => {
+          updateLikesUi(e.target, card);
+        })
+        .catch(console.log);
+    }
+  };
+
+  /**
+   *
+   * @param {HTMLLiElement} cardElement
+   * @param {string} cardId
+   * @param {Function} onSuccessfulDelete
+   * @param {Function} onFinally
+   */
+  const handleDeleteCard = (
+    cardElement,
+    cardId,
+    onSuccessfulDelete,
+    onFinally,
+  ) => {
+    deleteCard(cardId)
+      .then((_) => {
+        cardElement.remove();
+        onSuccessfulDelete();
+      })
+      .catch(console.log)
+      .finally(onFinally);
   };
 
   /**

@@ -55,29 +55,6 @@ const createCardElement = (
 
 /**
  *
- * @param {Event} e
- * @param {string} cardId
- */
-const handleLikeCard = (e, cardId) => {
-  // delete like
-  if (e.target.classList.contains('card__like-button_is-active')) {
-    handleLikes(cardId, 'DELETE')
-      .then((card) => {
-        updateLikesUi(e.target, card);
-      })
-      .catch(console.log);
-  } else {
-    // put like
-    handleLikes(cardId, 'PUT')
-      .then((card) => {
-        updateLikesUi(e.target, card);
-      })
-      .catch(console.log);
-  }
-};
-
-/**
- *
  * @param {HTMLButtonElement} likesButton
  * @param {Card} card
  */
@@ -96,26 +73,4 @@ const updateLikesUi = (likesButton, card) => {
   likesButton.classList.toggle('card__like-button_is-active');
 };
 
-/**
- *
- * @param {HTMLLiElement} cardElement
- * @param {string} cardId
- * @param {Function} onSuccessfulDelete
- * @param {Function} onFinally
- */
-const handleDeleteCard = (
-  cardElement,
-  cardId,
-  onSuccessfulDelete,
-  onFinally,
-) => {
-  deleteCard(cardId)
-    .then((_) => {
-      cardElement.remove();
-      onSuccessfulDelete();
-    })
-    .catch(console.log)
-    .finally(onFinally);
-};
-
-export { createCardElement, handleLikeCard, handleDeleteCard };
+export { createCardElement, updateLikesUi };
