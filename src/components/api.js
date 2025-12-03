@@ -178,9 +178,13 @@ const changeUserAvatar = (avatarLink) => {
 const checkIsPicture = (link) => {
   return fetch(`${link}`, {
     method: 'HEAD',
-  }).then((response) =>
-    getResponseData(response, `Unable check resource ${link}`),
-  );
+  }).then((response) => {
+    if (response.ok) {
+      const contentType = response.headers.get('Content-Type');
+      return imagesContentTypes.includes(contentType);
+    }
+    return Promise.reject(`Unable change user avatar, ${response.status}`);
+  });
 };
 
 export {
