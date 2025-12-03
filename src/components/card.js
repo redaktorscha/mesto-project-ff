@@ -1,4 +1,4 @@
-import { deleteCard, Card, incrementLikes, decrementLikes } from './api.js';
+import { deleteCard, Card, handleLikes } from './api.js';
 import { openModal } from './modal.js';
 
 /**
@@ -62,14 +62,14 @@ const createCardElement = (
 const handleLikeCard = (e, cardId) => {
   // delete like
   if (e.target.classList.contains('card__like-button_is-active')) {
-    decrementLikes(cardId)
+    handleLikes(cardId, 'DELETE')
       .then((card) => {
         updateLikesUi(e.target, card);
       })
       .catch(console.log);
   } else {
     // put like
-    incrementLikes(cardId)
+    handleLikes(cardId, 'PUT')
       .then((card) => {
         updateLikesUi(e.target, card);
       })

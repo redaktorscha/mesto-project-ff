@@ -140,28 +140,18 @@ const deleteCard = (cardId) => {
 /**
  *
  * @param {string} cardId
+ * @param {string} method
  * @returns {Promise<Card>}
  */
-const incrementLikes = (cardId) => {
-  return fetch(endPoints.cardLikePut(cardId), {
-    method: 'PUT',
-    headers: apiConfig.authHeaders,
-  }).then((response) =>
-    getResponseData(response, `Unable like card ${cardId}`),
-  );
-};
+const handleLikes = (cardId, method) => {
+  const endPointMethod =
+    method === 'PUT' ? endPoints.cardLikePut : endPoints.cardLikeDelete;
 
-/**
- *
- * @param {string} cardId
- * @returns {Promise<Card>}
- */
-const decrementLikes = (cardId) => {
-  return fetch(endPoints.cardLikeDelete(cardId), {
-    method: 'DELETE',
+  return fetch(endPointMethod(cardId), {
+    method: `${method}`,
     headers: apiConfig.authHeaders,
   }).then((response) =>
-    getResponseData(response, `Unable remove like from card ${cardId}`),
+    getResponseData(response, `Unable ${method} like card ${cardId}`),
   );
 };
 
@@ -199,8 +189,7 @@ export {
   editUserProfile,
   addNewCard,
   deleteCard,
-  incrementLikes,
-  decrementLikes,
+  handleLikes,
   checkIsPicture,
   changeUserAvatar,
 };
