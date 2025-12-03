@@ -121,9 +121,7 @@ const enableValidation = (validationConfig) => {
 const clearValidation = (formElement, validationConfig) => {
   const { inputSelector, submitButtonSelector } = validationConfig;
   const inputList = [...formElement.querySelectorAll(inputSelector)];
-  inputList.forEach((inputElement) =>
-    checkInputValidity(formElement, inputElement, validationConfig),
-  );
+
   const buttonElement = formElement.querySelector(submitButtonSelector);
   // disables if not valid
   toggleButtonState(inputList, buttonElement, validationConfig);
