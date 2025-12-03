@@ -68,6 +68,26 @@ const hasInvalidInput = (inputList) => {
 
 /**
  *
+ * @param {HTMLButtonElement} buttonElement
+ * @param {string} buttonClass
+ */
+const disableButton = (buttonElement) => {
+  buttonElement.disabled = true;
+  buttonElement.classList.add(buttonClass);
+};
+
+/**
+ *
+ * @param {HTMLButtonElement} buttonElement
+ * @param {string} buttonClass
+ */
+const enableButton = (buttonElement) => {
+  buttonElement.disabled = false;
+  buttonElement.classList.remove(buttonClass);
+};
+
+/**
+ *
  * @param {Array<HTMLInputElement>} inputList
  * @param {HTMLButtonElement} buttonElement
  * @param {ValidationConfig} validationConfig
@@ -77,9 +97,9 @@ const toggleButtonState = (inputList, buttonElement, validationConfig) => {
   const shouldDisableButton = hasInvalidInput(inputList);
   buttonElement.disabled = shouldDisableButton;
   if (shouldDisableButton) {
-    buttonElement.classList.add(inactiveButtonClass);
+    disableButton(buttonElement, inactiveButtonClass);
   } else {
-    buttonElement.classList.remove(inactiveButtonClass);
+    enableButton(buttonElement, inactiveButtonClass);
   }
 };
 
@@ -123,7 +143,8 @@ const clearValidation = (formElement, validationConfig) => {
   const inputList = [...formElement.querySelectorAll(inputSelector)];
 
   const buttonElement = formElement.querySelector(submitButtonSelector);
-  // disables if not valid
+  const { inactiveButtonClass } = validationConfig;
+  disableButton(buttonElement, inactiveButtonClass);
   toggleButtonState(inputList, buttonElement, validationConfig);
 
   inputList.forEach((inputElement) => {
