@@ -57,17 +57,23 @@ const endPoints = {
 
 /**
  *
+ * @param {Response} response
+ * @param {string} errorMessage
+ * @returns {Promise}
+ */
+const getResponseData = (response, errorMessage) => {
+  if (response.ok) {
+    return response.json();
+  }
+  return Promise.reject(`${errorMessage}, ${response.status}`);
+};
+/**
+ *
  * @returns {Promise<User>}
  */
 const getUserInfo = () => {
   return fetch(endPoints.userGet(), { headers: apiConfig.authHeaders }).then(
-    (response) => {
-      if (response.ok) {
-        return response.json();
-      } else {
-        return Promise.reject(`Unable get user info, ${response.status}`);
-      }
-    },
+    (response) => getResponseData(response, 'Unable get user info'),
   );
 };
 
@@ -77,13 +83,7 @@ const getUserInfo = () => {
  */
 const getCardsList = () => {
   return fetch(endPoints.cardsGet(), { headers: apiConfig.authHeaders }).then(
-    (response) => {
-      if (response.ok) {
-        return response.json();
-      } else {
-        return Promise.reject(`Unable get cards, ${response.status}`);
-      }
-    },
+    (response) => getResponseData(response, 'Unable get cards'),
   );
 };
 
@@ -101,13 +101,7 @@ const editUserProfile = (newUserName, newUserDescription) => {
       name: newUserName,
       about: newUserDescription,
     }),
-  }).then((response) => {
-    if (response.ok) {
-      return response.json();
-    } else {
-      return Promise.reject(`Unable edit user profile, ${response.status}`);
-    }
-  });
+  }).then((response) => getResponseData(response, 'Unable edit user profile'));
 };
 
 /**
@@ -124,15 +118,9 @@ const addNewCard = (cardName, pictureLink) => {
       name: cardName,
       link: pictureLink,
     }),
-  }).then((response) => {
-    if (response.ok) {
-      return response.json();
-    } else {
-      return Promise.reject(
-        `Unable add new card ${cardName}, ${response.status}`,
-      );
-    }
-  });
+  }).then((response) =>
+    getResponseData(response, `Unable add new card ${cardName}`),
+  );
 };
 
 /**
@@ -144,13 +132,9 @@ const deleteCard = (cardId) => {
   return fetch(endPoints.cardDelete(cardId), {
     method: 'DELETE',
     headers: apiConfig.authHeaders,
-  }).then((response) => {
-    if (response.ok) {
-      return response.json();
-    } else {
-      return Promise.reject(`Unable delete card ${cardId}, ${response.status}`);
-    }
-  });
+  }).then((response) =>
+    getResponseData(response, `Unable delete card ${cardId}`),
+  );
 };
 
 /**
@@ -162,13 +146,9 @@ const incrementLikes = (cardId) => {
   return fetch(endPoints.cardLikePut(cardId), {
     method: 'PUT',
     headers: apiConfig.authHeaders,
-  }).then((response) => {
-    if (response.ok) {
-      return response.json();
-    } else {
-      return Promise.reject(`Unable like card ${cardId}, ${response.status}`);
-    }
-  });
+  }).then((response) =>
+    getResponseData(response, `Unable like card ${cardId}`),
+  );
 };
 
 /**
@@ -180,15 +160,9 @@ const decrementLikes = (cardId) => {
   return fetch(endPoints.cardLikeDelete(cardId), {
     method: 'DELETE',
     headers: apiConfig.authHeaders,
-  }).then((response) => {
-    if (response.ok) {
-      return response.json();
-    } else {
-      return Promise.reject(
-        `Unable remove like from card ${cardId}, ${response.status}`,
-      );
-    }
-  });
+  }).then((response) =>
+    getResponseData(response, `Unable remove like from card ${cardId}`),
+  );
 };
 
 /**
@@ -203,13 +177,7 @@ const changeUserAvatar = (avatarLink) => {
     body: JSON.stringify({
       avatar: avatarLink,
     }),
-  }).then((response) => {
-    if (response.ok) {
-      return response.json();
-    } else {
-      return Promise.reject(`Unable change user avatar, ${response.status}`);
-    }
-  });
+  }).then((response) => getResponseData(response, 'Unable change user avatar'));
 };
 
 /**
@@ -220,14 +188,9 @@ const changeUserAvatar = (avatarLink) => {
 const checkIsPicture = (link) => {
   return fetch(`${link}`, {
     method: 'HEAD',
-  }).then((response) => {
-    if (response.ok) {
-      const contentType = response.headers.get('Content-Type');
-      return imagesContentTypes.includes(contentType);
-    } else {
-      return Promise.reject(`Unable change user avatar, ${response.status}`);
-    }
-  });
+  }).then((response) =>
+    getResponseData(response, `Unable check resource ${link}`),
+  );
 };
 
 export {
