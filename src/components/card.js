@@ -1,5 +1,4 @@
 import { deleteCard, Card, handleLikes } from './api.js';
-import { openModal } from './modal.js';
 
 /**
  *
