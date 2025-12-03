@@ -71,7 +71,7 @@ const hasInvalidInput = (inputList) => {
  * @param {HTMLButtonElement} buttonElement
  * @param {string} buttonClass
  */
-const disableButton = (buttonElement) => {
+const disableButton = (buttonElement, buttonClass) => {
   buttonElement.disabled = true;
   buttonElement.classList.add(buttonClass);
 };
@@ -81,7 +81,7 @@ const disableButton = (buttonElement) => {
  * @param {HTMLButtonElement} buttonElement
  * @param {string} buttonClass
  */
-const enableButton = (buttonElement) => {
+const enableButton = (buttonElement, buttonClass) => {
   buttonElement.disabled = false;
   buttonElement.classList.remove(buttonClass);
 };
