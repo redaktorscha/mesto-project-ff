@@ -24,6 +24,8 @@ import {
   addNewCard,
   checkIsPicture,
   changeUserAvatar,
+  handleLikes,
+  deleteCard,
 } from './components/api.js';
 
 const loadingButtonText = 'Сохранение...';

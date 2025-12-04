@@ -1,4 +1,4 @@
-import { deleteCard, Card, handleLikes } from './api.js';
+import { Card } from './api.js';
 
 /**
  *
